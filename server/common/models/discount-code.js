@@ -10,6 +10,7 @@ const mongoose = require('mongoose')
  */
 
 const discountCodeSchema = mongoose.Schema({
+  discountPercent: { type: Number, min: 1, max: 100, required: true },
   discountAmount: { type: Number, required: true },
   orderId: {
     type: mongoose.Schema.Types.ObjectId,
