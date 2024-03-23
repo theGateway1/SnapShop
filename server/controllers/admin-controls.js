@@ -1,3 +1,5 @@
+'use strict'
+
 exports.createDiscountCode = (req, res, next) => {
   // Generate discount code
 }
