@@ -21,6 +21,7 @@ exports.createNewOrder = (req, res, next) => {
     let orderValueInPaiseAfterDiscount = 0
     let discountAmount = 0
     const orderId = new ObjectId() // This needs to be passed to createDiscountCode method before creating an order, so have it generated beforehand
+    let itemsPurchased = []
 
     if (!itemsList?.length) {
       throw new Error('Failed to create order. No items found')
@@ -48,10 +49,10 @@ exports.createNewOrder = (req, res, next) => {
         }
 
         /**
-        Check if the quantity user has entered is available in store or not, and calculate the total price for each item here, don't trust any value from frontend
+        Check if the quantity user has entered is available in store or not, and calculate the total price for each item here, don't trust any value from frontend, and populate itemsPurchased list
         */
 
-        itemsList.forEach((item) => {
+        itemsPurchased = itemsList.map((item) => {
           const dbItem = dbItemsList.find((dbItem) =>
             dbItem._id.equals(item._id),
           )
@@ -62,7 +63,14 @@ exports.createNewOrder = (req, res, next) => {
             )
           }
 
+          // Keep calculating total order value
           orderValueInPaiseBeforeDiscount += dbItem.priceInPaise * itemQty
+
+          return {
+            itemId: item._id,
+            quantity: itemQty,
+            pricePerUnit: dbItem.priceInPaise,
+          }
         })
 
         // Get existing document count of orders collection
@@ -103,11 +111,11 @@ exports.createNewOrder = (req, res, next) => {
         discountAmount = discountAmount.toFixed(2)
 
         const order = new Order({
-          _id: orderId,
+          _id: orderId, // Use the orderId that was already created
           userId: ObjectId(userId),
           status: OrderStatus.CREATED,
           createdOn: new Date(),
-          itemsPurchased: itemsList,
+          itemsPurchased,
           orderValueInPaiseAfterDiscount,
           orderValueInPaiseBeforeDiscount,
           discountAmount,
@@ -129,7 +137,7 @@ exports.createNewOrder = (req, res, next) => {
       .then((invoiceId) => {
         /** 
          Now send the invoice back to client for them to make payment and place the order
-         */
+        */
         console.log(
           'Created order successfully, sending invoice to user',
           invoiceId,
@@ -140,6 +148,7 @@ exports.createNewOrder = (req, res, next) => {
           orderValueInPaiseAfterDiscount,
           orderValueInPaiseAfterDiscount,
           discountAmount,
+          itemsPurchased,
           result: Results.SUCCESS,
         })
       })

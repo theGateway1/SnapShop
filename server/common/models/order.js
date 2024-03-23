@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const itemsPurchasedSchema = mongoose.Schema({
   itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
   quantity: { type: Number, required: true, min: 0 },
+  pricePerUnit: { type: Number, required: true, min: 0 }, // Since price of an item can fluctuate, this will help keep track of amount user paid for this item, in case refund needs to be issued
 })
 
 const orderSchema = mongoose.Schema({
