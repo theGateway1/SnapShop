@@ -15,16 +15,12 @@ exports.signUpUser = (req, res, next) => {
     const lastName = req.body.lastName
 
     if (!firstName || !lastName || !email || !password) {
-      return res
-        .status(HttpStatus.StatusCodes.BAD_REQUEST)
-        .json({ error: 'Please provide email or password' })
+      throw new Error('Please provide email or password')
     }
 
     // Password validation
     if (!password.length > 6) {
-      return res
-        .status(HttpStatus.StatusCodes.BAD_REQUEST)
-        .json({ error: 'Password should be atleast 7 characters long' })
+      throw new Error('Password should be atleast 7 characters long')
     }
 
     // Store hashed password in database. Use 12 salt rounds instead of 10 for more complex hash
@@ -47,6 +43,7 @@ exports.signUpUser = (req, res, next) => {
             const authToken = jwt.sign(
               { userId: newUser._id.toString() },
               process.env.AUTH_SECRET,
+              { expiresIn: '24h' }, // Token will expire in 24 hrs
             )
             return res
               .status(HttpStatus.StatusCodes.OK)
@@ -69,7 +66,7 @@ exports.signUpUser = (req, res, next) => {
     console.error(error)
     return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Some error occured. Please try again later' })
+      .json({ error })
   }
 }
 
@@ -80,9 +77,7 @@ exports.logInUser = (req, res, next) => {
     const password = req.body.password
 
     if (!email || !password) {
-      return res
-        .status(HttpStatus.StatusCodes.BAD_REQUEST)
-        .json({ error: 'Please provide email and password' })
+      throw new Error('Please provide email and password')
     }
 
     // Find user by their email, and get stored password
@@ -99,14 +94,16 @@ exports.logInUser = (req, res, next) => {
         .then((match) => {
           if (!match) {
             // Don't tell exact reason that password didn't match, in case if user is just fishing
-            return res
-              .status(HttpStatus.StatusCodes.UNAUTHORIZED)
-              .json({ error: 'Email or password invalid' })
+            throw new Error('Email or password invalid')
           }
 
           // Send authToken along with some basic data back like user's name. Further data can be loaded in later API calls based on application needs
-          // Create authToken that will be sent to server for authorization in later requests from client
-          const authToken = jwt.sign({ userId }, process.env.AUTH_SECRET)
+
+          const authToken = jwt.sign(
+            { userId },
+            process.env.AUTH_SECRET,
+            { expiresIn: '24h' }, // Token will expire in 24 hrs
+          )
           return res.status(HttpStatus.StatusCodes.OK).json({
             authToken,
             firstName: user.firstName,
@@ -114,6 +111,7 @@ exports.logInUser = (req, res, next) => {
             result: Results.SUCCESS,
           })
         })
+
         .catch((error) => {
           console.error(error)
           return res
@@ -125,7 +123,7 @@ exports.logInUser = (req, res, next) => {
     console.error(error)
     return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Some error occured. Please try again later' })
+      .json({ error })
   }
 }
 
@@ -134,9 +132,7 @@ exports.validateUserAuthToken = (req, res, next) => {
     // Extract user id here from JWT, and attach it to req object
     const authToken = req.headers.authtoken
     if (!authToken) {
-      return res
-        .status(HttpStatus.StatusCodes.UNAUTHORIZED)
-        .json({ error: 'Unauthenticated session. Please login again' })
+      throw new Error('Unauthenticated session. Please login again')
     }
 
     const authData = jwt.verify(authToken, process.env.AUTH_SECRET)
@@ -152,19 +148,11 @@ exports.validateUserAuthToken = (req, res, next) => {
 
 exports.isUserAdmin = (req, res, next) => {
   try {
-    // Get user id here and check if that user is admin
-    if (!req.userId) {
-      return res
-        .status(HttpStatus.StatusCodes.BAD_REQUEST)
-        .json({ error: 'Error Occured. Please try again' })
-    }
-
     // Check if user is admin
-    User.findById(ObjectId(req.userId), { isAdmin: 1 }).then((user) => {
+    const userId = req.userId
+    User.findById(ObjectId(userId), { isAdmin: 1 }).then((user) => {
       if (!user.isAdmin) {
-        return res
-          .status(HttpStatus.StatusCodes.UNAUTHORIZED)
-          .json({ error: 'You are not authorized to perform this operation' })
+        throw new Error('You are not authorized to perform this operation')
       }
 
       req.isAdmin = true
