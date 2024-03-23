@@ -100,6 +100,7 @@ exports.createNewOrder = (req, res, next) => {
           orderValueInPaiseAfterDiscount.toFixed(2)
         orderValueInPaiseBeforeDiscount =
           orderValueInPaiseBeforeDiscount.toFixed(2)
+        discountAmount = discountAmount.toFixed(2)
 
         const order = new Order({
           _id: orderId,
@@ -110,7 +111,7 @@ exports.createNewOrder = (req, res, next) => {
           orderValueInPaiseAfterDiscount,
           orderValueInPaiseBeforeDiscount,
           discountAmount,
-          discountCode,
+          discountCode: ObjectId(discountCode),
         })
 
         return order.save()
@@ -139,6 +140,7 @@ exports.createNewOrder = (req, res, next) => {
           orderValueInPaiseAfterDiscount,
           orderValueInPaiseAfterDiscount,
           discountAmount,
+          result: Results.SUCCESS,
         })
       })
   } catch (error) {

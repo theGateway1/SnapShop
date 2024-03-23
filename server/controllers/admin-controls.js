@@ -9,7 +9,7 @@ const DiscountCode = require('../common/models/discount-code')
  * @param {Request} orderId - The orderId for which this code will be used
  * @param {Request} discountPercent - The discount in percentage being applied
  * @param {Request} discountAmount - The amount being discounted
- * @returns Discount Code
+ * @returns Discount Code (String)
  */
 exports.createDiscountCodeHelper = (
   orderId,
@@ -23,8 +23,26 @@ exports.createDiscountCodeHelper = (
       }
 
       // Generate discount code
-      const discountCode = new DiscountCode({})
-    } catch (error) {}
+      const discountCode = new DiscountCode({
+        discountPercent,
+        discountAmount,
+        orderId,
+      })
+
+      discountCode
+        .save()
+        .then((newDiscountCode) => {
+          console.log('Discount code created', newDiscountCode._id.toString())
+          resolve(newDiscountCode._id.toString())
+        })
+        .catch((error) => {
+          console.error(error)
+          reject(error)
+        })
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
   })
 }
 
@@ -33,7 +51,7 @@ exports.createDiscountCodeHelper = (
  * @param {Request} req.body.orderId - The orderId for which this code will be used
  * @param {Request} req.body.discountPercent - The discount in percentage being applied
  * @param {Request} req.body.discountAmount - The amount being discounted
- * @returns Discount Code
+ * @returns Discount Code (String)
  */
 exports.createDiscountCode = (req, res, next) => {
   try {
@@ -61,18 +79,34 @@ exports.createDiscountCode = (req, res, next) => {
   }
 }
 
+/**
+ * Route middleware to list count of items purchased
+ * @returns List of items purchased in the form: [{itemName, purchasedCount}]
+ */
 exports.getItemsPurchasedList = (req, res, next) => {
   // Get list of items purchased
 }
 
+/**
+ * Route middleware to get total purchased amount
+ * @returns Total purchased amount (Number)
+ */
 exports.getTotalPurchaseAmount = (req, res, next) => {
   // Get total purchase amount
 }
 
+/**
+ * Route middleware to get list of all the discount codes
+ * @returns List of all the existing discount codes
+ */
 exports.getDiscountCodesList = (req, res, next) => {
   // Get discount codes list
 }
 
+/**
+ * Route middleware to get total discount amount
+ * @returns Total discount amount (Number)
+ */
 exports.getTotalDiscountAmount = (req, res, next) => {
   // Get total discount amount
 }
