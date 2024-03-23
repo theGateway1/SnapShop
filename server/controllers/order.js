@@ -10,7 +10,7 @@ const PaymentsController = require('./payments')
 
 /**
  * Middleware function to create new order
- * @param {Request} req.body.itemsList - The list of items in format: [{itemId, itemQty}]
+ * @param {Array} req.body.itemsList - The list of items in format: [{itemId, itemQty}]
  * @returns Creates order and generates payment invoice for newly created order
  */
 exports.createNewOrder = (req, res, next) => {

@@ -1,14 +1,15 @@
 'use strict'
 const HttpStatus = require('http-status-codes')
 const DiscountCode = require('../common/models/discount-code')
+const { ObjectId } = require('mongodb')
 
 // Controller for admin-only methods
 
 /**
  * Helper function to create new discount code
- * @param {Request} orderId - The orderId for which this code will be used
- * @param {Request} discountPercent - The discount in percentage being applied
- * @param {Request} discountAmount - The amount being discounted
+ * @param {String} orderId - The orderId for which this code will be used
+ * @param {Number} discountPercent - The discount in percentage being applied
+ * @param {Number} discountAmount - The amount being discounted
  * @returns Discount Code (String)
  */
 exports.createDiscountCodeHelper = (
@@ -26,7 +27,7 @@ exports.createDiscountCodeHelper = (
       const discountCode = new DiscountCode({
         discountPercent,
         discountAmount,
-        orderId,
+        orderId: ObjectId(orderId),
       })
 
       discountCode
@@ -48,9 +49,9 @@ exports.createDiscountCodeHelper = (
 
 /**
  * Route middleware to create new discount code using the helper
- * @param {Request} req.body.orderId - The orderId for which this code will be used
- * @param {Request} req.body.discountPercent - The discount in percentage being applied
- * @param {Request} req.body.discountAmount - The amount being discounted
+ * @param {String} req.body.orderId - The orderId for which this code will be used
+ * @param {Number} req.body.discountPercent - The discount in percentage being applied
+ * @param {Number} req.body.discountAmount - The amount being discounted
  * @returns Discount Code (String)
  */
 exports.createDiscountCode = (req, res, next) => {
