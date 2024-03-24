@@ -9,3 +9,5 @@ router.post(
   AuthController.validateUserAuthToken,
   OrderController.createNewOrder,
 )
+
+module.exports = router

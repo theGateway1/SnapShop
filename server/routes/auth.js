@@ -7,3 +7,5 @@ router.post('/user-signup', AuthController.signUpUser)
 
 // Login user
 router.post('/user-login', AuthController.logInUser)
+
+module.exports = router
