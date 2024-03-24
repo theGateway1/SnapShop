@@ -5,12 +5,14 @@ import { loginUser } from '../../shared/auth/auth-service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../shared/contexts/auth-context';
+import Spinner from '../../shared/components/Loader/loader';
 
 const Auth = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loginDisabled, setLoginDisabled] = useState(false);
   const { setUser, setIsAuthenticated } = useAuth();
 
   const navigate = useNavigate();
@@ -19,6 +21,9 @@ const Auth = (props) => {
     // Set initial error values to empty
     setEmailError('');
     setPasswordError('');
+
+    // Remove older toasts
+    toast.dismiss();
 
     // Check if the user has entered both fields correctly
     if (!email?.length) {
@@ -41,13 +46,16 @@ const Auth = (props) => {
       return;
     }
 
+    setLoginDisabled(true);
     loginUser(email, password)
       .then((loggedInUser) => {
+        setLoginDisabled(false);
         setUser(loggedInUser);
         setIsAuthenticated(true);
         navigate('/');
       })
       .catch((error) => {
+        setLoginDisabled(false);
         toast.error('Invalid credentials');
       });
   };
@@ -81,14 +89,14 @@ const Auth = (props) => {
         <label className="errorLabel">{passwordError}</label>
       </div>
       <br />
-      <div className={'inputContainer'}>
-        <input
-          className={'inputButton'}
-          type="button"
-          onClick={loginButtonClicked}
-          value={'Log in'}
-        />
-      </div>
+      <button
+        type="button"
+        className={`loginButton ${loginDisabled ? 'loginButton__disabled' : ''}`}
+        disabled={loginDisabled}
+        onClick={loginButtonClicked}
+      >
+        Log in
+      </button>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -96,6 +104,7 @@ const Auth = (props) => {
         limit={1}
         theme="dark"
       />
+      <Spinner showSpinner={loginDisabled} />
     </div>
   );
 };
