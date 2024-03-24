@@ -1,10 +1,14 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-const AdminRouter = require('./routes/admin-only')
+const AdminRouter = require('./routes/admin-routes')
+const OrderRouter = require('./routes/order')
+const PaymentRouter = require('./routes/payment')
 
 // App routes
 app.use('/admin', AdminRouter)
+app.use('/order', OrderRouter)
+app.use('/payment', PaymentRouter)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Server listening on port ${port}`))
