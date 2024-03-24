@@ -179,7 +179,7 @@ exports.isUserAdmin = (req, res, next) => {
         throw new Error('You are not authorized to perform this operation')
       }
 
-      req.isAdmin = true
+      req.userIsAdmin = true
       next()
       return
     })
