@@ -4,9 +4,11 @@ const mongoose = require('mongoose')
 const AdminRouter = require('./routes/admin-routes')
 const OrderRouter = require('./routes/order')
 const PaymentRouter = require('./routes/payment')
+const AuthRouter = require('./routes/auth')
 
 // App routes
 app.use('/admin', AdminRouter)
+app.use('/auth', AuthRouter)
 app.use('/order', OrderRouter)
 app.use('/payment', PaymentRouter)
 
