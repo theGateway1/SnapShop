@@ -36,7 +36,7 @@ exports.postPaymentActions = (req, res, next) => {
 
     // Update order status to paid and fetch itemsList
     Order.findOneAndUpdate(
-      { _id: orderId },
+      { _id: ObjectId(orderId) },
       { $set: { status: OrderStatus.PAID } },
       { returnOriginal: false }, // To get the updated document
     )
