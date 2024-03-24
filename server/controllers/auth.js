@@ -6,6 +6,14 @@ const jwt = require('jsonwebtoken')
 const { Results } = require('../common/typedefs')
 const { ObjectId } = require('mongodb')
 
+/**
+ * Route middleware to signup a new user
+ * @param {String} req.body.email - The email of the user
+ * @param {String} req.body.password - The password set by user
+ * @param {String} req.body.firstName - The first name of the user
+ * @param {String} req.body.lastName - The last name of the user
+ * @returns Auth token for the user to login
+ */
 exports.signUpUser = (req, res, next) => {
   try {
     // Sign up user
@@ -70,6 +78,12 @@ exports.signUpUser = (req, res, next) => {
   }
 }
 
+/**
+ * Route middleware to login an existing user
+ * @param {String} req.body.email - The email of the user
+ * @param {String} req.body.password - The password set by user
+ * @returns Auth token, firstName and lastName of user
+ */
 exports.logInUser = (req, res, next) => {
   try {
     // Manual sign-in validation
@@ -127,6 +141,11 @@ exports.logInUser = (req, res, next) => {
   }
 }
 
+/**
+ * Route middleware to validate auth token of user before they can perform any action that needs authorization
+ * @param {String} req.headers.authtoken - The auth token of the user
+ * @returns {Function} - Calls next function in middleware
+ */
 exports.validateUserAuthToken = (req, res, next) => {
   try {
     // Extract user id here from JWT, and attach it to req object
@@ -146,6 +165,11 @@ exports.validateUserAuthToken = (req, res, next) => {
   }
 }
 
+/**
+ * Route middleware to validate if the current user is admin before they can perform any action that can only be performed by admin
+ * @param {String} req.userId - The userId of the user
+ * @returns {Function} - Calls next function in middleware
+ */
 exports.isUserAdmin = (req, res, next) => {
   try {
     // Check if user is admin
