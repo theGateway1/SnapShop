@@ -4,6 +4,7 @@ const DiscountCode = require('../common/models/discount-code')
 const { ObjectId } = require('mongodb')
 const Item = require('../common/models/item')
 const Order = require('../common/models/order')
+const { Results } = require('../common/typedefs')
 
 // Controller for admin-only methods
 
@@ -83,11 +84,15 @@ exports.createDiscountCode = (req, res, next) => {
       })
       .catch((error) => {
         console.error(error)
-        res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+        res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Results.INTERNAL_SERVER_ERROR })
       })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 
@@ -109,11 +114,15 @@ exports.getItemsPurchasedList = (req, res, next) => {
       })
       .catch((error) => {
         console.error(error)
-        res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+        res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Results.INTERNAL_SERVER_ERROR })
       })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 
@@ -151,7 +160,9 @@ exports.getTotalPurchaseAmount = (req, res, next) => {
     })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 
@@ -173,11 +184,15 @@ exports.getDiscountCodesList = (req, res, next) => {
       })
       .catch((error) => {
         console.error(error)
-        res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+        res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Results.INTERNAL_SERVER_ERROR })
       })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 
@@ -215,6 +230,8 @@ exports.getTotalDiscountAmount = (req, res, next) => {
     })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }

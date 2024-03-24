@@ -74,7 +74,7 @@ exports.signUpUser = (req, res, next) => {
     console.error(error)
     return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error })
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 
@@ -95,49 +95,56 @@ exports.logInUser = (req, res, next) => {
     }
 
     // Find user by their email, and get stored password
-    User.findOne(
-      { email },
-      { password: 1, firstName: 1, lastName: 1, _id: 1 },
-    ).then((user) => {
-      const savedHashedPassword = user.password
-      const userId = user._id.toString()
+    User.findOne({ email }, { password: 1, firstName: 1, lastName: 1, _id: 1 })
+      .then((user) => {
+        if (!user) {
+          throw new Error('User not found')
+        }
 
-      // Check if user's entered password matches the saved hashed password
-      bcrypt
-        .compare(password, savedHashedPassword)
-        .then((match) => {
-          if (!match) {
-            // Don't tell exact reason that password didn't match, in case if user is just fishing
-            throw new Error('Email or password invalid')
-          }
+        const savedHashedPassword = user.password
+        const userId = user._id.toString()
 
-          // Send authToken along with some basic data back like user's name. Further data can be loaded in later API calls based on application needs
+        // Check if user's entered password matches the saved hashed password
+        bcrypt
+          .compare(password, savedHashedPassword)
+          .then((match) => {
+            if (!match) {
+              // Don't tell exact reason that password didn't match, in case if user is just fishing
+              throw new Error('Email or password invalid')
+            }
 
-          const authToken = jwt.sign(
-            { userId },
-            process.env.AUTH_SECRET,
-            { expiresIn: '24h' }, // Token will expire in 24 hrs
-          )
-          return res.status(HttpStatus.StatusCodes.OK).json({
-            authToken,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            result: Results.SUCCESS,
+            // Send authToken along with some basic data back like user's name. Further data can be loaded in later API calls based on application needs
+
+            const authToken = jwt.sign(
+              { userId },
+              process.env.AUTH_SECRET,
+              { expiresIn: '24h' }, // Token will expire in 24 hrs
+            )
+            return res.status(HttpStatus.StatusCodes.OK).json({
+              authToken,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              result: Results.SUCCESS,
+            })
           })
-        })
-
-        .catch((error) => {
-          console.error(error)
-          return res
-            .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-            .json({ error: 'Some error occured. Please try again later' })
-        })
-    })
+          .catch((error) => {
+            console.error(error)
+            return res
+              .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+              .json({ error: Results.INTERNAL_SERVER_ERROR })
+          })
+      })
+      .catch((error) => {
+        console.error(error)
+        return res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: 'User not found' })
+      })
   } catch (error) {
     console.error(error)
     return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error })
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
 

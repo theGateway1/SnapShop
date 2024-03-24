@@ -154,6 +154,8 @@ exports.createNewOrder = (req, res, next) => {
       })
   } catch (error) {
     console.error(error)
-    res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({ error })
+    res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
