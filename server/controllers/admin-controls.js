@@ -10,7 +10,7 @@ const { ObjectId } = require('mongodb')
  * @param {String} orderId - The orderId for which this code will be used
  * @param {Number} discountPercent - The discount in percentage being applied
  * @param {Number} discountAmount - The amount being discounted
- * @returns Discount Code (String)
+ * @returns {Promise<String>} Discount Code (String)
  */
 exports.createDiscountCodeHelper = (
   orderId,

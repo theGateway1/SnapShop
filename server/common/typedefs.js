@@ -7,6 +7,7 @@ exports.Results = {
 
 exports.OrderStatus = {
   CREATED: 'created',
+  PAID: 'paid',
   SHIPPED: 'shipped',
   CANCELLED: 'cancelled',
   DELIVERED: 'delivered',
