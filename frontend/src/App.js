@@ -13,7 +13,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Auth />} />
             {/* Private routes can only be accessed after authentication */}
-            <Route path="/" element={<PrivateRoute component={Home} />} />
+            <Route path="/" element={<PrivateRoute Component={Home} />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
