@@ -13,11 +13,23 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 372px) {
+  .product-card {
+    width: 16rem;
+  }
+}
+
 .product-card img {
   width: 18rem;
   height: 12rem;
   object-fit: cover;
   border-radius: 0.5rem;
+}
+
+@media only screen and (max-width: 372px) {
+  .product-card img {
+    width: 14rem;
+  }
 }
 
 .product-card h3 {
