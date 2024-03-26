@@ -8,16 +8,16 @@
 
 .inputContainer > .errorLabel {
   color: red;
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 
 .inputBox {
-  height: 48px;
-  width: 400px;
+  height: 2.5rem;
+  width: 20rem;
   font-size: large;
-  border-radius: 8px;
+  border-radius: 0.3rem;
   border: 1px solid grey;
-  padding-left: 8px;
+  padding-left: 1rem;
 }
 
 /* body {
