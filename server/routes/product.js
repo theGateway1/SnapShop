@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const ProductController = require('../controllers/product');
-const AuthController = require('../controllers/auth');
+const express = require('express')
+const router = express.Router()
+const ProductController = require('../controllers/product')
+const AuthController = require('../controllers/auth')
 
 // Get list of products for home page
 router.get(
-  '/get-products',
+  '/get-products/:page',
   AuthController.validateUserAuthToken, // User should be authenticated
-  ProductController.getProducts
-);
+  ProductController.getProducts,
+)
 
-module.exports = router;
+module.exports = router

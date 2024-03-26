@@ -8,6 +8,7 @@ const itemSchema = mongoose.Schema({
   availableQty: { type: Number, min: 0, required: true },
   priceInPaise: { type: Number, min: 0, required: true },
   purchasedCount: { type: Number, default: 0, min: 0 },
+  imgSrc: { type: String, required: true },
 })
 
 module.exports = mongoose.model('Item', itemSchema)
