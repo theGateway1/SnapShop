@@ -1,0 +1,31 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.3rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 20rem;
+  padding: 1rem;
+  text-align: center;
+  background-color: rgb(249, 249, 249);
+  cursor: pointer;
+}
+
+.product-card img {
+  width: 18rem;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.product-card h3 {
+  margin: 1rem 0;
+}
+
+.product-card .price {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
