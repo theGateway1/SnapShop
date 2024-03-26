@@ -31,7 +31,9 @@ const api = (method, url, variables) =>
           if (error.response?.data?.error == API_ERRORS.SESSION_EXPIRED) {
             reject('Session Expired');
             localStorage.removeItem('currentUser');
-            history.push('/login');
+            setTimeout(() => {
+              history.push('/login');
+            });
             return;
           }
           console.error(error);
