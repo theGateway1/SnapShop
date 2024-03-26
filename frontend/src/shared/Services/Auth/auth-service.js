@@ -1,10 +1,14 @@
-import api from '../utils/api';
+import api from '../../utils/api';
 
 var currentUser;
 export const getUserAuthToken = () => {
   if (currentUser) {
     return currentUser.authToken;
   }
+};
+
+export const setCurrentUser = (loggedInUser) => {
+  currentUser = loggedInUser;
 };
 
 export const getUserName = () => {

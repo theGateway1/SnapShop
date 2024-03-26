@@ -166,6 +166,13 @@ exports.validateUserAuthToken = (req, res, next) => {
     next()
   } catch (error) {
     console.error(error)
+    if (error.name === 'TokenExpiredError') {
+      // JWT token has expired
+      console.error('JWT token has expired')
+      res
+        .status(HttpStatus.StatusCodes.UNAUTHORIZED)
+        .json({ error: 'Session Expired' })
+    }
     return res
       .status(HttpStatus.StatusCodes.UNAUTHORIZED)
       .json({ error: 'Unauthenticated session. Please login again' })

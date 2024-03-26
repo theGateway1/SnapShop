@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { objectToQueryString } from '../../shared/utils/url';
-import { getUserAuthToken } from '../auth/auth-service';
+import { getUserAuthToken } from '../Services/Auth/auth-service';
+import history from '../../browserHistory';
+import { API_ERRORS } from '../constants/api-errors';
 
 const defaults = {
   baseURL: process.env.API_URL || 'http://localhost:3001',
@@ -25,6 +27,13 @@ const api = (method, url, variables) =>
           resolve(response.data);
         })
         .catch((error) => {
+          // User's session timed out, redirect user to login
+          if (error.response?.data?.error == API_ERRORS.SESSION_EXPIRED) {
+            reject('Session Expired');
+            localStorage.removeItem('currentUser');
+            history.push('/login');
+            return;
+          }
           console.error(error);
           reject(error);
         });
