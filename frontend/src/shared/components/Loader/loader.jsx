@@ -8,7 +8,7 @@ const override = {
   left: '50%',
 };
 
-function Spinner({ showSpinner }) {
+const Spinner = ({ showSpinner }) => {
   return showSpinner ? (
     <div>
       <div className="loading-overlay"></div>
@@ -24,6 +24,6 @@ function Spinner({ showSpinner }) {
   ) : (
     <></>
   );
-}
+};
 
 export default Spinner;

@@ -1,0 +1,12 @@
+.mainContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.errorText {
+  color: rgb(182, 63, 63);
+  font-size: 1.5rem;
+}

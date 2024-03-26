@@ -5,6 +5,7 @@ const AdminRouter = require('./routes/admin-routes')
 const OrderRouter = require('./routes/order')
 const PaymentRouter = require('./routes/payment')
 const AuthRouter = require('./routes/auth')
+const ProductRouter = require('./routes/product')
 app.use(express.json())
 
 // Add CORS middleware
@@ -20,6 +21,7 @@ app.use('/admin', AdminRouter)
 app.use('/auth', AuthRouter)
 app.use('/order', OrderRouter)
 app.use('/payment', PaymentRouter)
+app.use('/product', ProductRouter)
 
 const port = process.env.PORT || 3001
 app.listen(port, () => console.log(`Server listening on port ${port}`))
