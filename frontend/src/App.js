@@ -5,6 +5,7 @@ import './App.css';
 import PrivateRoute from './shared/components/private-route';
 import { AuthProvider } from './shared/contexts/auth-context';
 import { CartProvider } from './shared/contexts/cart-context';
+import Cart from './components/Cart/cart';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/login" element={<Auth />} />
               {/* Private routes can only be accessed after authentication */}
               <Route path="/" element={<PrivateRoute Component={Home} />} />
+              <Route path="/cart" element={<PrivateRoute Component={Cart} />} />
             </Routes>
           </CartProvider>
         </AuthProvider>
