@@ -1,0 +1,28 @@
+.header {
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1342b1d5;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  z-index: 1000;
+}
+
+.header p {
+  margin: 0;
+  cursor: pointer;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-content-right {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+}

@@ -29,3 +29,7 @@ code {
 .non-selectable {
   user-select: none;
 }
+
+.header-above {
+  padding-top: 2.3rem;
+}

@@ -1,10 +1,14 @@
 import React from 'react';
 import ProductList from '../../shared/components/Product/Product-List/product-list';
+import Header from '../../shared/components/Header/header';
 
 const Home = () => {
   return (
     <>
-      <ProductList></ProductList>
+      <Header />
+      <div className="header-above">
+        <ProductList />
+      </div>
     </>
   );
 };
