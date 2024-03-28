@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
 import { loginUser } from '../../shared/Services/Auth/auth-service';
@@ -13,9 +13,15 @@ const Auth = (props) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [loginDisabled, setLoginDisabled] = useState(false);
-  const { setUser, setIsAuthenticated } = useAuth();
-
+  const { setUser, setIsAuthenticated, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Auth context will try to login user automatically, if that succeeds, redirect user to home page
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  });
 
   const loginButtonClicked = async () => {
     // Set initial error values to empty
@@ -61,51 +67,53 @@ const Auth = (props) => {
   };
 
   return (
-    <div className={'mainContainer'}>
-      <div className={'titleContainer'}>
-        <div>Login</div>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input
-          type="email"
-          value={email}
-          placeholder="Email"
-          onChange={(ev) => setEmail(ev.target.value)}
-          className={'inputBox'}
-        />
-        <label className="errorLabel">{emailError}</label>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input
-          type="password"
-          value={password}
-          placeholder="Password"
-          onChange={(ev) => setPassword(ev.target.value)}
-          className={'inputBox'}
-        />
+    <>
+      <div className={'mainContainer'}>
+        <div className={'titleContainer'}>
+          <div>Login</div>
+        </div>
+        <br />
+        <div className={'inputContainer'}>
+          <input
+            type="email"
+            value={email}
+            placeholder="Email"
+            onChange={(ev) => setEmail(ev.target.value)}
+            className={'inputBox'}
+          />
+          <label className="errorLabel">{emailError}</label>
+        </div>
+        <br />
+        <div className={'inputContainer'}>
+          <input
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(ev) => setPassword(ev.target.value)}
+            className={'inputBox'}
+          />
 
-        <label className="errorLabel">{passwordError}</label>
+          <label className="errorLabel">{passwordError}</label>
+        </div>
+        <br />
+        <button
+          type="button"
+          className={`loginButton ${loginDisabled ? 'loginButton__disabled' : ''}`}
+          disabled={loginDisabled}
+          onClick={loginButtonClicked}
+        >
+          Log in
+        </button>
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={true}
+          limit={1}
+          theme="dark"
+        />
+        <Spinner showSpinner={loginDisabled} />
       </div>
-      <br />
-      <button
-        type="button"
-        className={`loginButton ${loginDisabled ? 'loginButton__disabled' : ''}`}
-        disabled={loginDisabled}
-        onClick={loginButtonClicked}
-      >
-        Log in
-      </button>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={true}
-        limit={1}
-        theme="dark"
-      />
-      <Spinner showSpinner={loginDisabled} />
-    </div>
+    </>
   );
 };
 

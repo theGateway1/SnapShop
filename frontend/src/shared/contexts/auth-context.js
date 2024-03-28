@@ -6,7 +6,7 @@ export const AuthContext = React.createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated,
   };
 
+  // Automatically login the user, and redirect to the path user tried to access
   useEffect(() => {
     let currentUserInfo = localStorage.getItem('currentUser');
     if (currentUserInfo) {
@@ -25,9 +26,9 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUserInfo);
       setCurrentUser(currentUserInfo);
       setIsAuthenticated(true);
-      navigate('/');
+      navigate(props.path);
     }
   }, []);
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
 };
