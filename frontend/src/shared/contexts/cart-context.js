@@ -3,31 +3,25 @@ import React, { useState, useContext } from 'react';
 const CartContext = React.createContext();
 export const useCart = () => useContext(CartContext);
 
-// Sample: To be removed later
-const productsData = [
-  { id: 1, name: 'Product 1', price: 10 },
-  { id: 2, name: 'Product 2', price: 20 },
-];
-
 export const CartProvider = ({ children }) => {
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
   // Helper functions to update items in cart
-  const addToCart = (productId) => {
-    const productToAdd = products.find((product) => product.id === productId);
-    setCart([...cart, { ...productToAdd, quantity: 1 }]);
+  const addToCart = (product) => {
+    setCart([...cart, { ...product, quantity: 1 }]);
   };
 
   const removeFromCart = (productId) => {
-    const updatedCart = cart.filter((item) => item.id !== productId);
+    const updatedCart = cart.filter((item) => item._id !== productId);
     setCart(updatedCart);
   };
 
-  const changeQuantity = (productId, newQuantity) => {
+  const changeQuantity = (product, newQuantity) => {
     const updatedCart = cart.map((item) =>
-      item.id === productId ? { ...item, quantity: newQuantity } : item,
+      item._id === product._id ? { ...item, quantity: newQuantity } : item,
     );
+
     setCart(updatedCart);
   };
 
