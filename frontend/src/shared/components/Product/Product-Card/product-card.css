@@ -41,3 +41,28 @@
   margin-top: 0;
   margin-bottom: 1rem;
 }
+
+.cart-input {
+  width: 2.2rem;
+  height: 2rem;
+  text-align: right;
+}
+
+.item-in-cart-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-qty {
+  background-color: white;
+  padding: 0.25rem 0.8rem;
+  border-radius: 0.4rem;
+  box-shadow: 0.2px 0px 0px 0.7px rgba(0, 0, 0, 0.3);
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.qty-btn {
+  font-size: 1.5rem;
+}
