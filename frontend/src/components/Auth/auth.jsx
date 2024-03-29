@@ -98,7 +98,7 @@ const Auth = (props) => {
         <br />
         <button
           type="button"
-          className={`loginButton ${loginDisabled ? 'loginButton__disabled' : ''}`}
+          className={`action-btn ${loginDisabled ? 'action-btn__disabled' : ''}`}
           disabled={loginDisabled}
           onClick={loginButtonClicked}
         >

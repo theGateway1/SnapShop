@@ -33,3 +33,54 @@ code {
 .header-above {
   padding-top: 2.3rem;
 }
+
+.action-btn {
+  user-select: none;
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 0.8rem 0.8rem;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.action-btn__disabled {
+  user-select: none;
+  background: rgb(216, 216, 216);
+  cursor: default;
+}
+
+.btn-md {
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.1rem 0.5rem;
+}
+
+/* Scrollbar style */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c9c9c9;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #aeaeae;
+}

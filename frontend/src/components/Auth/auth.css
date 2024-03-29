@@ -40,19 +40,3 @@
   align-items: flex-start;
   justify-content: center;
 }
-
-.loginButton {
-  border: none;
-  background: cornflowerblue;
-  color: white;
-  padding: 0.8rem 0.8rem;
-  margin: 0.5rem;
-  font-size: 1.2rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-}
-
-.loginButton__disabled {
-  background: rgb(216, 216, 216);
-  cursor: default;
-}
