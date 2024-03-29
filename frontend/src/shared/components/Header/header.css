@@ -26,3 +26,23 @@
   justify-content: end;
   gap: 2rem;
 }
+
+.cart-with-count {
+  position: relative;
+  display: flex;
+}
+
+.item-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(0.7rem, -0.5rem);
+  background-color: rgb(160, 35, 35);
+  font-size: 0.7rem;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  height: 1.1rem;
+  width: 1.1rem;
+  vertical-align: middle;
+}

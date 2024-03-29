@@ -3,11 +3,13 @@ import { getUserName } from '../../Services/Auth/auth-service';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../contexts/auth-context';
 import { ToastContainer, toast } from 'react-toastify';
+import { useCart } from '../../contexts/cart-context';
 
 const Header = () => {
   const userName = getUserName();
   const navigate = useNavigate();
   const { setIsAuthenticated, setUser } = useAuth();
+  const { cart } = useCart();
 
   const openCart = () => {
     navigate('/cart');
@@ -34,7 +36,14 @@ const Header = () => {
           <p onClick={navigateToHome}>E-Commerce</p>
           <div className="header-content-right">
             <p onClick={greetUser}>{userName}</p>
-            <p onClick={openCart}>Cart</p>
+            {!cart.length ? (
+              <p onClick={openCart}>Cart</p>
+            ) : (
+              <div className="cart-with-count">
+                <div className="item-count">{cart.length}</div>
+                <p onClick={openCart}>Cart</p>
+              </div>
+            )}
             <p onClick={logUserOut}>Logout</p>
           </div>
         </div>
