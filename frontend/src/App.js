@@ -5,7 +5,7 @@ import './App.css';
 import PrivateRoute from './shared/components/private-route';
 import { AuthProvider } from './shared/contexts/auth-context';
 import { CartProvider } from './shared/contexts/cart-context';
-import Cart from './components/Cart/Cart-Page/cart';
+import Cart from './components/Cart/cart';
 
 function App() {
   return (
