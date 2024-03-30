@@ -1,10 +1,10 @@
 .header {
-  user-select: none;
+  user-select: text;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #1342b1d5;
+  background-color: #123da0d5;
   color: #fff;
   font-size: 1rem;
   padding: 0.4rem 1.2rem;
@@ -28,10 +28,11 @@
   justify-content: start;
   align-items: center;
   gap: 0.5rem;
-  color: rgb(243, 169, 32);
+  color: rgb(252, 166, 6);
   font-family: 'Permanent Marker', cursive;
   font-size: 1.2rem;
   font-weight: 100;
+  user-select: text;
 }
 
 .header-content-right {
@@ -50,7 +51,7 @@
   top: 0;
   right: 0;
   transform: translate(0.7rem, -0.5rem);
-  background-color: rgb(160, 35, 35);
+  background-color: rgb(252, 166, 6);
   font-size: 0.7rem;
   color: white;
   text-align: center;
