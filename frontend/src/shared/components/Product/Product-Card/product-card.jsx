@@ -9,6 +9,7 @@ const ProductCard = ({ product, page }) => {
   const { addToCart, changeQuantity, removeFromCart } = useCart();
   const [itemQtyInCart, setItemQtyInCart] = useState(quantity);
   const [userUpdatedItemQty, setUserUpdatedItemQty] = useState(false);
+  var toastId;
 
   // Use useEffect hook to update quantity in cart as state variable changes
   useEffect(() => {
@@ -36,8 +37,10 @@ const ProductCard = ({ product, page }) => {
   const addItemQtyToCart = () => {
     // Check if this item is available in stock, it is not real time, but gives a rough idea
     if (product.availableQty < itemQtyInCart + 1 || itemQtyInCart >= 1000) {
-      toast.dismiss();
-      toast("😓 Sorry, that's all we have for now.");
+      if (toastId) {
+        toast.dismiss(toastId);
+      }
+      toastId = toast("😓 Sorry, that's all we have for now.");
       return;
     }
     setUserUpdatedItemQty(true);
