@@ -33,7 +33,10 @@ const Header = () => {
     <>
       <header className="header">
         <div className="header-content">
-          <p onClick={navigateToHome}>E-Commerce</p>
+          <div onClick={navigateToHome} className="header-content-left">
+            <img className="header-image" src={require('../../assets/images/4pm.jpg')} />
+            <p>The 4PM Store</p>
+          </div>
           <div className="header-content-right">
             <p onClick={greetUser}>{userName}</p>
             {!cart.length ? (
