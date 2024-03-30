@@ -41,7 +41,7 @@ const Header = () => {
               className="header-image non-selectable"
               src={require('../../assets/images/4pm.jpg')}
             />
-            <p>The 4PM Store</p>
+            <p className="four-pm-branding">The 4PM Store</p>
           </div>
 
           <div className="header-content-right lg-only non-selectable">

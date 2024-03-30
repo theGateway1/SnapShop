@@ -28,10 +28,7 @@
   justify-content: start;
   align-items: center;
   gap: 0.8rem;
-  color: rgb(252, 166, 6);
-  font-family: 'Permanent Marker', cursive;
   font-size: 1.3rem;
-  font-weight: 100;
   user-select: text;
 }
 
