@@ -40,10 +40,8 @@ export const CartProvider = ({ children }) => {
 
   const resetCart = () => {
     setCart([]);
-    const updatedProducts = products.map((item) => {
-      return { ...item, quantity: 0 };
-    });
-    setProducts(updatedProducts);
+    // Set products to empty list, they will get refetched from server
+    setProducts([]);
   };
 
   const contextValue = {
