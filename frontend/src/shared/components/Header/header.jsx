@@ -13,6 +13,7 @@ const Header = () => {
   const { setIsAuthenticated, setUser } = useAuth();
   const { cart } = useCart();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { resetCart } = useCart();
 
   const openCart = () => {
     navigate('/cart');
@@ -22,6 +23,7 @@ const Header = () => {
     localStorage.removeItem('currentUser');
     setUser(null);
     setIsAuthenticated(false);
+    resetCart();
   };
 
   const navigateToHome = () => {
