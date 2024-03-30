@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false }, // A nascent way to manage 2 user roles: user and admin, since it is a small project
+  joinedAt: { type: Date, default: Date.now() },
 })
 
 userSchema.plugin(uniqueValidator)
