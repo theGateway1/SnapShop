@@ -14,19 +14,23 @@ const ProductList = ({ page }) => {
 
   useEffect(() => {
     if (page === APP_PAGES.HOME) {
-      setIsLoading(true);
-      const page = 1;
+      if (!products.length) {
+        setIsLoading(true);
+        const page = 1;
 
-      getProducts(page)
-        .then((productsList) => {
-          setProducts(productsList);
-        })
-        .catch((error) => {
-          setErrorOccured(true);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        getProducts(page)
+          .then((productsList) => {
+            setProducts(productsList);
+          })
+          .catch((error) => {
+            setErrorOccured(true);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } else {
+        setProducts(products);
+      }
     }
   }, []);
 
