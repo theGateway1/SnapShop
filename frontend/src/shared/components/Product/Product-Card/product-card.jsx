@@ -106,7 +106,7 @@ const ProductCard = ({ product, page }) => {
           <div className="cart-card-right">
             <p className="item-name">{name.length > 50 ? `${name.substr(0, 100)}...` : name}</p>
             <p className="item-status">In Stock | Delivery: By 4 PM tomorrow</p>
-            <div className="status-qty-container">
+            <div className="price-qty-container">
               <p className="price-cart">{'Price: ₹' + priceFormatter(price)}</p>
 
               <div className="item-in-cart-options">
