@@ -21,7 +21,9 @@ const Cart = () => {
         <ErrorScreen errorMessage={'Your cart is empty 🤷‍♂️'}></ErrorScreen>
       ) : (
         <>
-          <Banner />
+          <div>
+            <Banner addedClass="banner-container" />
+          </div>
           <div>
             <ProductList page={APP_PAGES.CART} />
           </div>
