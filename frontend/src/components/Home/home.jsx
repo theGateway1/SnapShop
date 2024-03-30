@@ -3,13 +3,14 @@ import ProductList from '../../shared/components/Product/Product-List/product-li
 import Header from '../../shared/components/Header/header';
 import { APP_PAGES } from '../../shared/constants/app-constants';
 import './home.css';
+import Banner from '../../shared/components/Banner/banner';
 
 const Home = () => {
   return (
     <>
       <Header />
-      <div className="header-above">
-        <div className="four-pm-branding banner-text">`Get it delivered by 4 PM.`</div>
+      <Banner />
+      <div>
         <ProductList page={APP_PAGES.HOME} />
       </div>
     </>

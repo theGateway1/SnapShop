@@ -6,6 +6,7 @@ import { ErrorScreen } from '../../shared/components/Error-Screen/error-screen';
 import { useState } from 'react';
 import ProductList from '../../shared/components/Product/Product-List/product-list';
 import { APP_PAGES } from '../../shared/constants/app-constants';
+import Banner from '../../shared/components/Banner/banner';
 
 const Cart = () => {
   const { cart } = useCart();
@@ -20,7 +21,8 @@ const Cart = () => {
         <ErrorScreen errorMessage={'Your cart is empty 🤷‍♂️'}></ErrorScreen>
       ) : (
         <>
-          <div className="header-above">
+          <Banner />
+          <div>
             <ProductList page={APP_PAGES.CART} />
           </div>
         </>
