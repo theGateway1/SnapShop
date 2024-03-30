@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="product-card ">
+    <div className="product-card">
       <img className="non-selectable" src={imgSrc} alt={name} />
       <h4>{name.length > 50 ? `${name.substr(0, 60)}...` : name}</h4>
       <p className="price">₹{priceFormatter(price)}</p>
