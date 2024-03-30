@@ -70,7 +70,11 @@ const Auth = (props) => {
     <>
       <div className={'mainContainer'}>
         <div className={'titleContainer'}>
-          <div>Login</div>
+          <img
+            className="banner-image non-selectable"
+            src={require('../../shared/assets/images/4pm.jpg')}
+          />
+          <div className="heading">The 4PM Store</div>
         </div>
         <br />
         <div className={'inputContainer'}>
