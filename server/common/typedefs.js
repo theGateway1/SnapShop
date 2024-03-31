@@ -13,3 +13,9 @@ exports.OrderStatus = {
   DELIVERED: 'delivered',
   COMPLETED: 'completed',
 }
+
+exports.DiscountCodeStatus = {
+  ACTIVE: 'active', // Unused code that will avail discount
+  USED: 'used', // Discount code that has been used
+  REVOKED: 'revoked', // An active discount code that has been revoked by admin
+}
