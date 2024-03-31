@@ -17,11 +17,13 @@ exports.createNewOrder = (req, res, next) => {
   try {
     const userId = req.userId
     const itemsList = req.body.itemsList
+    const existingDiscountCode = req.body.discountCode // Discount received by user when they clicked get discount code
     let orderValueInPaiseBeforeDiscount = 0
     let orderValueInPaiseAfterDiscount = 0
     let discountAmount = 0
     const orderId = new ObjectId() // This needs to be passed to createDiscountCode method before creating an order, so have it generated beforehand
     let itemsPurchased = []
+    var discountPercent // Will be assigned value later conditionally
 
     if (!itemsList?.length) {
       throw new Error('Failed to create order. No items found')
@@ -73,27 +75,34 @@ exports.createNewOrder = (req, res, next) => {
           }
         })
 
-        // Get existing document count of orders collection
-        return Order.countDocuments()
+        // If user has come up with a discount code, skip checking for order count & creating a new discount
+        if (existingDiscountCode) {
+          return
+        } else {
+          // Get existing document count of orders collection
+          return Order.countDocuments()
+        }
       })
       .then((existingOrdersCount) => {
         /**
          Check if this order is eligible for discount, whether this is nth order
          */
 
-        const currentOrderCount = existingOrdersCount + 1 // The current order being placed is existingOrdersCount + 1
-        if (currentOrderCount % process.env.NTH_ORDER_COUNT == 0) {
-          const discountPercent = 10
+        const currentOrderCount = existingOrdersCount
+          ? existingOrdersCount + 1
+          : 0 // The current order being placed is existingOrdersCount + 1
+
+        if (
+          existingDiscountCode ||
+          currentOrderCount % process.env.NTH_ORDER_COUNT == 0
+        ) {
+          discountPercent = 10
           discountAmount = 0.1 * orderValueInPaiseBeforeDiscount // Apply 10% discount
           orderValueInPaiseAfterDiscount =
             orderValueInPaiseBeforeDiscount - discountAmount
 
           // Generate discount code for this order
-          return AdminController.createDiscountCodeHelper(
-            orderId,
-            discountPercent,
-            discountAmount,
-          )
+          return AdminController.createDiscountCodeHelper(discountPercent)
         } else {
           orderValueInPaiseAfterDiscount = orderValueInPaiseBeforeDiscount
         }
@@ -126,12 +135,14 @@ exports.createNewOrder = (req, res, next) => {
       })
       .then(() => {
         /**
-         Since this is an e-commerce application, let's call generateInvoice API (out of current scope, per se), for which client will make payment
+         Since this is an e-commerce application, let's call generateInvoice API, for which client will make payment
         */
 
         return PaymentsController.generateInvoice(
           orderId,
           orderValueInPaiseAfterDiscount,
+          discountAmount,
+          discountPercent,
         )
       })
       .then((invoiceId) => {
@@ -142,7 +153,7 @@ exports.createNewOrder = (req, res, next) => {
           'Created order successfully, sending invoice to user',
           invoiceId,
         )
-        res.status(HttpStatus.StatusCodes.OK).json({
+        return res.status(HttpStatus.StatusCodes.OK).json({
           orderId,
           invoiceId,
           orderValueInPaiseAfterDiscount,
@@ -154,7 +165,7 @@ exports.createNewOrder = (req, res, next) => {
       })
   } catch (error) {
     console.error(error)
-    res
+    return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: Results.INTERNAL_SERVER_ERROR })
   }

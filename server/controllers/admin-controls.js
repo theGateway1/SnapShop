@@ -4,37 +4,26 @@ const DiscountCode = require('../common/models/discount-code')
 const { ObjectId } = require('mongodb')
 const Item = require('../common/models/item')
 const Order = require('../common/models/order')
-const { Results } = require('../common/typedefs')
+const { Results, DiscountCodeStatus } = require('../common/typedefs')
 
 // Controller for admin-only methods
 
 /**
- * An internal (unexposed) helper function to create new discount code
- * @param {String} orderId - The orderId for which this code will be used
+ * An internal (unexposed) helper function to create new discount code. If discount percentage is not passed, 10% will be default value
  * @param {Number} discountPercent - The discount in percentage being applied
- * @param {Number} discountAmount - The amount being discounted
  * @returns {Promise<String>} Discount Code (String)
  */
-exports.createDiscountCodeHelper = (
-  orderId,
-  discountPercent,
-  discountAmount,
-) => {
+exports.createDiscountCodeHelper = (discountPercent = 10) => {
   /** 
    This method is called internally and by design it is not part of any route middleware, so only server can access it, hence there is no need to explicitly verify that user is admin or not
   */
 
   return new Promise((resolve, reject) => {
     try {
-      if (!orderId || !discountAmount || !discountPercent) {
-        throw new Error('Missing request parameters')
-      }
-
       // Generate discount code
       const discountCode = new DiscountCode({
         discountPercent,
-        discountAmount,
-        orderId: ObjectId(orderId),
+        status: DiscountCodeStatus.ACTIVE,
       })
 
       discountCode
@@ -55,10 +44,8 @@ exports.createDiscountCodeHelper = (
 }
 
 /**
- * Route middleware to create new discount code using the helper
- * @param {String} req.body.orderId - The orderId for which this code will be used
- * @param {Number} req.body.discountPercent - The discount in percentage being applied
- * @param {Number} req.body.discountAmount - The amount being discounted
+ * Route middleware (Admin-only) to create new discount code using the helper function
+ * @param {Number} discountPercent - The discount in percentage being applied
  * @returns Discount Code (String)
  */
 exports.createDiscountCode = (req, res, next) => {
@@ -68,16 +55,8 @@ exports.createDiscountCode = (req, res, next) => {
       throw new Error('User unathorized to perform this action')
     }
 
-    const orderId = req.body.orderId
-    const discountPercent = req.body.discountPercent
-    const discountAmount = req.body.discountAmount
-
-    if (!orderId || !discountAmount || !discountPercent) {
-      throw new Error('Missing request parameters')
-    }
-
     // Generate discount code using helper
-    this.createDiscountCodeHelper(orderId, discountPercent, discountAmount)
+    this.createDiscountCodeHelper()
       .then((discountCode) => {
         req.discountCode = discountCode
         next()
@@ -97,7 +76,7 @@ exports.createDiscountCode = (req, res, next) => {
 }
 
 /**
- * Route middleware to list count of items purchased
+ * Route middleware (Admin-only) to list count of items purchased
  * @returns List of items purchased in the form: [{itemName, purchasedCount}]
  */
 exports.getItemsPurchasedList = (req, res, next) => {
@@ -127,7 +106,7 @@ exports.getItemsPurchasedList = (req, res, next) => {
 }
 
 /**
- * Route middleware to get total purchased amount
+ * Route middleware (Admin-only) to get total purchased amount
  * @returns Total purchased amount (Number)
  */
 exports.getTotalPurchaseAmount = (req, res, next) => {
@@ -167,7 +146,7 @@ exports.getTotalPurchaseAmount = (req, res, next) => {
 }
 
 /**
- * Route middleware to get list of all the discount codes
+ * Route middleware (Admin-only) to get list of all the discount codes
  * @returns List of all the existing discount codes
  */
 exports.getDiscountCodesList = (req, res, next) => {
@@ -197,7 +176,7 @@ exports.getDiscountCodesList = (req, res, next) => {
 }
 
 /**
- * Route middleware to get total discount amount
+ * Route middleware (Admin-only) to get total discount amount
  * @returns Total discount amount (Number)
  */
 exports.getTotalDiscountAmount = (req, res, next) => {
