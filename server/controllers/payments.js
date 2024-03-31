@@ -1,15 +1,25 @@
 const { ObjectId } = require('mongodb')
 const HttpStatus = require('http-status-codes')
 const Order = require('../common/models/order')
-const { OrderStatus, Results } = require('../common/typedefs')
+const {
+  OrderStatus,
+  Results,
+  DiscountCodeStatus,
+} = require('../common/typedefs')
+const DiscountCode = require('../common/models/discount-code')
 
 /**
- * This is a hypothetical API for POC of this application, because after order generation, invoice needs to be created - So this API stimulates that. Please refer to method createNewOrder() in controllers/order.js
+ * A dummy API for POC of this application, because after order generation, invoice needs to be created - So this API stimulates that. Please refer to method createNewOrder() in controllers/order.js
  * @param {String} orderId - The orderId for which invoice needs to be generated
  * @param {Number} billAmount - The amount for which invoice needs to be generated
  * @returns Creates payment invoice for an order
  */
-exports.generateInvoice = (orderId, billAmount) => {
+exports.generateInvoice = (
+  orderId,
+  billAmount,
+  discountAmount,
+  discountPercent,
+) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const invoiceId = new ObjectId()
@@ -20,15 +30,18 @@ exports.generateInvoice = (orderId, billAmount) => {
 }
 
 /**
- * Another hypothetical API for POC of this application, it will be called by a 3rd party (like Razorpay) after payment is made for an invoice, to perform the post payment actions
+ * A dummy API for POC of this application, it will be called by a 3rd party (like Razorpay) after payment is made for an invoice, to perform the post payment actions.
+ * For the purpose of this application, it will be called by the server after clicking make payment button
  * @param {String} req.body.invoiceId - The invoiceId for which payment has been made
  * @param {String} req.body.orderId - The orderId for which payment has been made
+ * @param {String} req.body.discountCode - discountCode applied to order (if any)
  * @returns {void} - Performs post payment actions
  */
 exports.postPaymentActions = (req, res, next) => {
   try {
     const orderId = req.body.orderId
     const invoiceId = req.body.invoiceId
+    const discountCode = req.body.discountCode
 
     if (!invoiceId || !orderId) {
       throw new Error('Missing invoice id or order id')
@@ -69,18 +82,46 @@ exports.postPaymentActions = (req, res, next) => {
         return Promise.all(promises)
       })
       .catch((error) => {
+        // Failing to update above collections post-payment is fatal, send error back
         console.error(error)
-        res
+        return res
           .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ error: Results.INTERNAL_SERVER_ERROR })
       })
       .then(() => {
+        // Update discount code status to USED, update the discount amount and percentage that this code provided, and the corresponding orderId
+        if (!discountCode) {
+          return
+        }
+
+        return DiscountCode.findOneAndUpdate(
+          { _id: ObjectId(discountCode) },
+          {
+            status: DiscountCodeStatus.USED,
+            discountAmount: req.body.discountAmount,
+            discountPercent: req.body.discountPercent,
+            orderId: ObjectId(orderId),
+          },
+        )
+      })
+      .then(() => {
         console.log('Completed post payment actions')
-        res.status(HttpStatus.StatusCodes.OK).json({ result: Results.SUCCESS })
+        return res
+          .status(HttpStatus.StatusCodes.OK)
+          .json({ result: Results.SUCCESS })
+      })
+      .catch((error) => {
+        // Failing to update discount code status is not fatal - Send success
+        console.error('Failed to update discount code status', error)
+        console.log('Anyways, returning success')
+
+        return res
+          .status(HttpStatus.StatusCodes.OK)
+          .json({ result: Results.SUCCESS })
       })
   } catch (error) {
-    console.error(error)
-    res
+    console.error('Post payment actions failed', error)
+    return res
       .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
