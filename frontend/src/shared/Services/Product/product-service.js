@@ -13,3 +13,16 @@ export const getProducts = (page) => {
       });
   });
 };
+
+export const priceFormatter = (number) => {
+  // Handle non-numeric input
+  if (isNaN(number)) {
+    return '';
+  }
+
+  const parts = number.toFixed(2).split('.');
+  const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const decimalPart = parts[1] ? `.${parts[1]}` : '';
+
+  return `${integerPart}${decimalPart}`;
+};
