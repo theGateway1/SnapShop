@@ -16,7 +16,7 @@ const OrderSummary = () => {
     <div className="order-summary">
       <div className="order-summary__price">
         <span className="order-heading">Order Total: </span>
-        <span className="total-price">₹{getOrderTotal()}</span>
+        <span className="total-price">{getOrderTotal()}</span>
       </div>
       <div className="gift-checkbox">
         <input type="checkbox" />
@@ -27,7 +27,7 @@ const OrderSummary = () => {
           <div className="order-contents__item">
             <div>{item.name.substr(0, 57).trim()}... </div>
             <div>x{item.quantity}</div>
-            <div style={{ color: '#007c00' }}>₹{priceFormatter(item.quantity * item.price)}</div>
+            <div style={{ color: '#007c00' }}>{priceFormatter(item.quantity * item.price)}</div>
           </div>
         ))}
       </div>

@@ -54,7 +54,7 @@ const ProductCard = ({ product, page }) => {
         <div className="product-card-home">
           <img className="non-selectable" src={imgSrc} alt={name} />
           <h4>{name.length > 50 ? `${name.substr(0, 60).trim()}...` : name}</h4>
-          <p className="price">₹{priceFormatter(price)}</p>
+          <p className="price">{priceFormatter(price)}</p>
           {!itemQtyInCart ? (
             <button type="button" className="action-btn btn-md" onClick={addItemToCart}>
               Add to cart
@@ -97,7 +97,7 @@ const ProductCard = ({ product, page }) => {
             </p>
             <p className="item-status">In Stock | Delivery: By 4 PM tomorrow</p>
             <div className="price-qty-container">
-              <p className="price-cart">{'Price: ₹' + priceFormatter(price)}</p>
+              <p className="price-cart">{'Price: ' + priceFormatter(price)}</p>
 
               <div className="item-in-cart-options">
                 <button
