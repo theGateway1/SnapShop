@@ -4,11 +4,18 @@
   gap: 1rem;
   align-items: center;
   justify-items: center;
+  margin: 1rem 0;
+}
+
+.product-list {
+  margin: 1rem 0;
 }
 
 ul {
   list-style: none;
   padding: 0 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* Extra small devices (phones, 600px and down) */

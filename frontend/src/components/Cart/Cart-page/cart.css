@@ -1,0 +1,22 @@
+@media only screen and (max-width: 800px) {
+  .banner-container {
+    font-size: 1.8rem;
+    padding-top: 1.4rem;
+  }
+}
+
+.cart-heading {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.cart-summary-wrapper {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+}
+
+.cart-order-summary__container {
+  margin-top: 1rem;
+}

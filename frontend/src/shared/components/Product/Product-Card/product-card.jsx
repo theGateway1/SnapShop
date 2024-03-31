@@ -3,6 +3,7 @@ import { useCart } from '../../../contexts/cart-context';
 import './product-card.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { APP_PAGES } from '../../../constants/app-constants';
+import { priceFormatter } from '../../../Services/Product/product-service';
 
 const ProductCard = ({ product, page }) => {
   const { imgSrc, name, price, quantity } = product;
@@ -45,19 +46,6 @@ const ProductCard = ({ product, page }) => {
     }
     setUserUpdatedItemQty(true);
     setItemQtyInCart(itemQtyInCart + 1);
-  };
-
-  const priceFormatter = (number) => {
-    // Handle non-numeric input
-    if (isNaN(number)) {
-      return '';
-    }
-
-    const parts = number.toFixed(2).split('.');
-    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const decimalPart = parts[1] ? `.${parts[1]}` : '';
-
-    return `${integerPart}${decimalPart}`;
   };
 
   return (

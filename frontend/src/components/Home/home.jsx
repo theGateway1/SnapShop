@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <Header />
       <Banner />
-      <div>
+      <div className="body-margin">
         <ProductList page={APP_PAGES.HOME} />
       </div>
     </>

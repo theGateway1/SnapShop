@@ -90,3 +90,7 @@ code {
   font-family: 'Permanent Marker', cursive;
   font-weight: 100;
 }
+
+.body-margin {
+  margin: 1.2rem;
+}
