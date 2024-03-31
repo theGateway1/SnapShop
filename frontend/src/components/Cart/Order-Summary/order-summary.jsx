@@ -22,6 +22,15 @@ const OrderSummary = () => {
         <input type="checkbox" />
         <div>This order contains a gift</div>
       </div>
+      <div className="order-contents">
+        {cart.map((item) => (
+          <div className="order-contents__item">
+            <div>{item.name.substr(0, 57)}... </div>
+            <div>x{item.quantity}</div>
+            <div>₹{priceFormatter(item.quantity * item.price)}</div>
+          </div>
+        ))}
+      </div>
       <button className="action-btn btn-lg checkout-btn">Proceed to checkout</button>
     </div>
   );

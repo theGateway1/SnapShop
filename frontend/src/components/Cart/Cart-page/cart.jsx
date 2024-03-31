@@ -24,7 +24,7 @@ const Cart = () => {
         <>
           <Banner addedClass="banner-container" />
           <div className="body-margin cart-summary-wrapper">
-            <div>
+            <div className="cart-items">
               <div className="cart-heading">Shopping Cart</div>
               <ProductList page={APP_PAGES.CART} />
             </div>

@@ -10,9 +10,10 @@
 }
 
 .checkout-btn {
-  margin-top: 1rem;
-  padding: 0.4rem;
-  font-size: 1rem;
+  padding: 0.5rem;
+  font-size: 0.98rem;
+  max-width: 10rem;
+  margin: 1rem auto 0 auto;
 }
 
 .order-heading {
@@ -37,4 +38,59 @@ input[type='checkbox'] {
   margin: 0;
   margin-right: 0.3rem;
   margin-top: 0.1rem;
+}
+
+.order-contents {
+  font-size: 0.9rem;
+  color: #707070;
+}
+
+.order-contents__item {
+  display: grid;
+  grid-template-columns: 25rem 1.5rem max-content;
+  grid-column-gap: 0.2rem;
+  padding: 0.3rem;
+}
+
+@media only screen and (max-width: 580px) {
+  .order-contents__item {
+    grid-template-columns: 20rem 1.5rem max-content;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .order-contents__item {
+    grid-template-columns: 16rem 1.5rem max-content;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  .order-contents {
+    font-size: 0.75rem;
+    color: #707070;
+  }
+
+  .order-contents__item {
+    grid-template-columns: 11rem 1.5rem max-content;
+  }
+
+  .checkout-btn {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    max-width: 10rem;
+    margin: 1rem auto 0 auto;
+  }
+
+  .order-heading {
+    font-size: 1rem;
+  }
+
+  .total-price {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .gift-checkbox {
+    font-size: 0.8rem;
+  }
 }

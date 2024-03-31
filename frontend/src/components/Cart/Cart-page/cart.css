@@ -20,3 +20,25 @@
 .cart-order-summary__container {
   margin-top: 1rem;
 }
+
+.cart-items {
+  flex: 1 1 50rem;
+}
+
+@media only screen and (max-width: 1120px) {
+  .cart-summary-wrapper {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .cart-heading {
+    font-size: 1.3rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .cart-heading {
+    font-size: 1.1rem;
+  }
+}
