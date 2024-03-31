@@ -103,3 +103,23 @@ input[type='checkbox'] {
     font-size: 0.8rem;
   }
 }
+
+.discount-string {
+  display: inline;
+  color: green;
+  font-size: 0.8rem;
+}
+
+.updated-price {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+@media only screen and (max-width: 400px) {
+  .updated-price {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+}

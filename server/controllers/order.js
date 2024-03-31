@@ -204,6 +204,7 @@ exports.checkDiscountCodeExists = (req, res, next) => {
           return res.status(HttpStatus.StatusCodes.OK).json({
             discountCode,
             discountValue: `${discountPercent}%`,
+            discountPercent,
           })
         } else {
           return res
