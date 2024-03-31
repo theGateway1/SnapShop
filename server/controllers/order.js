@@ -86,7 +86,7 @@ exports.createNewOrder = (req, res, next) => {
       .then((existingOrdersCount) => {
         /**
          Check if this order is eligible for discount, whether this is nth order
-         */
+        */
 
         const currentOrderCount = existingOrdersCount
           ? existingOrdersCount + 1
@@ -162,6 +162,60 @@ exports.createNewOrder = (req, res, next) => {
           itemsPurchased,
           result: Results.SUCCESS,
         })
+      })
+      .catch((error) => {
+        console.error(error)
+        return res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Results.INTERNAL_SERVER_ERROR })
+      })
+  } catch (error) {
+    console.error(error)
+    return res
+      .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: Results.INTERNAL_SERVER_ERROR })
+  }
+}
+
+/**
+ * Middleware function to check if a discount code can be alloted to the user based on order number. If it can be alloted, it generates the discount code and returns it.
+ * @returns Discount Code
+ */
+exports.checkDiscountCodeExists = (req, res, next) => {
+  try {
+    var discountPercent
+    Order.countDocuments()
+      .then((existingOrdersCount) => {
+        /**
+        Check if this order is eligible for discount, whether this is nth order
+        */
+
+        // The current order being placed is existingOrdersCount + 1
+        const currentOrderCount = existingOrdersCount + 1
+
+        if (currentOrderCount % process.env.NTH_ORDER_COUNT == 0) {
+          // Generate discount code for this order
+          discountPercent = 10
+          return AdminController.createDiscountCodeHelper(discountPercent)
+        }
+      })
+      .then((discountCode) => {
+        if (discountCode) {
+          return res.status(HttpStatus.StatusCodes.OK).json({
+            discountCode,
+            discountValue: `${discountPercent}%`,
+          })
+        } else {
+          return res
+            .status(HttpStatus.StatusCodes.OK)
+            .json({ message: 'Discount code not found' })
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+        return res
+          .status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Results.INTERNAL_SERVER_ERROR })
       })
   } catch (error) {
     console.error(error)

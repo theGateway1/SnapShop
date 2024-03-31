@@ -10,4 +10,11 @@ router.post(
   OrderController.createNewOrder,
 )
 
+// Request discount code: Will only return success if current order is nth order
+router.get(
+  '/request-discount-code',
+  AuthController.validateUserAuthToken,
+  OrderController.checkDiscountCodeExists,
+)
+
 module.exports = router
