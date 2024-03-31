@@ -25,7 +25,7 @@ const OrderSummary = () => {
       <div className="order-contents">
         {cart.map((item) => (
           <div className="order-contents__item">
-            <div>{item.name.substr(0, 57)}... </div>
+            <div>{item.name.substr(0, 57).trim()}... </div>
             <div>x{item.quantity}</div>
             <div style={{ color: '#007c00' }}>₹{priceFormatter(item.quantity * item.price)}</div>
           </div>

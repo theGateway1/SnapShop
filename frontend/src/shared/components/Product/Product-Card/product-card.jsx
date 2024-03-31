@@ -53,7 +53,7 @@ const ProductCard = ({ product, page }) => {
       {page === APP_PAGES.HOME ? (
         <div className="product-card-home">
           <img className="non-selectable" src={imgSrc} alt={name} />
-          <h4>{name.length > 50 ? `${name.substr(0, 60)}...` : name}</h4>
+          <h4>{name.length > 50 ? `${name.substr(0, 60).trim()}...` : name}</h4>
           <p className="price">₹{priceFormatter(price)}</p>
           {!itemQtyInCart ? (
             <button type="button" className="action-btn btn-md" onClick={addItemToCart}>
@@ -92,7 +92,9 @@ const ProductCard = ({ product, page }) => {
             <img src={imgSrc} alt={name} />
           </div>
           <div className="cart-card-right">
-            <p className="item-name">{name.length > 50 ? `${name.substr(0, 100)}...` : name}</p>
+            <p className="item-name">
+              {name.length > 50 ? `${name.substr(0, 100).trim()}...` : name}
+            </p>
             <p className="item-status">In Stock | Delivery: By 4 PM tomorrow</p>
             <div className="price-qty-container">
               <p className="price-cart">{'Price: ₹' + priceFormatter(price)}</p>
