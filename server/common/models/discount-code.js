@@ -6,17 +6,18 @@ const mongoose = require('mongoose')
  * Design decisions made for this schema:
  * 1. Storing discount amount here will make it easier to retreive total discountAmount, by just going through each document and adding the this field
  * 2. Instead of creating a unique code everytime in the server, and verifying whether it is unique or not, let mongoDB's unique document ID generation handle that for us.
- * 3. Discount code will be generated for a particular order, the orderId in the schema will point to that particular order
+ * 3. When a discount code is used, i.e. payment is made for an order with discount code, the corresponding order Id will be stored in database.
  */
 
 const discountCodeSchema = mongoose.Schema({
-  discountPercent: { type: Number, min: 1, max: 100, required: true },
-  discountAmount: { type: Number, min: 0, required: true }, // The amount that this discount coupon waived off
+  discountPercent: { type: Number, min: 1, max: 100, required: false },
+  discountAmount: { type: Number, min: 0, required: false }, // The amount that this discount coupon waived off
   orderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Order',
-    required: true,
+    required: false,
   },
+  status: { type: String, required: true }, // Refer DiscountCodeStatus in 'server/common/typedefs'
 })
 
 module.exports = mongoose.model('DiscountCode', discountCodeSchema)
