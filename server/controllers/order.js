@@ -25,9 +25,11 @@ exports.createOrderInvoice = (req, res, next) => {
     let orderValueInPaiseAfterDiscount = 0
     let discountAmount = 0
     const orderId = new ObjectId() // This needs to be passed to createDiscountCode method before creating an order, so have it generated beforehand
-    let itemsPurchased = []
+    let updatedCart = [] // To be sent back to client
+    let orderItems = [] // To be stored in database for order record
     var discountPercent // Will be assigned value later conditionally
     var discountCodeApplied
+    var discountValue
 
     if (!itemsList?.length) {
       throw new Error('Failed to create order. No items found')
@@ -46,6 +48,8 @@ exports.createOrderInvoice = (req, res, next) => {
           availableQty: 1,
           priceInPaise: 1,
           itemName: 1,
+          imgSrc: 1,
+          availableQty: 1,
         },
       },
     ])
@@ -58,7 +62,7 @@ exports.createOrderInvoice = (req, res, next) => {
         Check if the quantity user has entered is available in store or not, and calculate the total price for each item here, don't trust any value from frontend, and populate itemsPurchased list
         */
 
-        itemsPurchased = itemsList.map((item) => {
+        itemsList.forEach((item) => {
           const dbItem = dbItemsList.find((dbItem) =>
             dbItem._id.equals(item._id),
           )
@@ -72,12 +76,24 @@ exports.createOrderInvoice = (req, res, next) => {
           // Keep calculating total order value
           orderValueInPaiseBeforeDiscount += dbItem.priceInPaise * item.quantity
 
-          return {
-            itemId: item._id,
+          updatedCart.push({
+            _id: item._id,
+            name: item.name,
             quantity: item.quantity,
-            pricePerUnit: dbItem.priceInPaise,
-          }
+            price: paisetoRupee(dbItem.priceInPaise),
+            imgSrc: item.imgSrc,
+            availableQty: item.availableQty,
+          })
+
+          orderItems.push({
+            _id: item._id,
+            quantity: item.quantity,
+            price: dbItem.priceInPaise,
+          })
         })
+
+        // Assing orderValueInPaiseAfterDiscount = orderValueInPaiseBeforeDiscount, if there is any discount code, the price will be update below
+        orderValueInPaiseAfterDiscount = orderValueInPaiseBeforeDiscount
 
         // If user has come up with a discount code, skip checking for order count & creating a new discount
         if (existingDiscountCode) {
@@ -99,14 +115,13 @@ exports.createOrderInvoice = (req, res, next) => {
 
         if (currentOrderCount % process.env.NTH_ORDER_COUNT == 0) {
           discountPercent = 10
+          discountValue = '10%' // To be shown to user
           discountAmount = 0.1 * orderValueInPaiseBeforeDiscount // Apply 10% discount
           orderValueInPaiseAfterDiscount =
             orderValueInPaiseBeforeDiscount - discountAmount
 
           // Generate discount code for this order
           return AdminController.createDiscountCodeHelper(discountPercent)
-        } else {
-          orderValueInPaiseAfterDiscount = orderValueInPaiseBeforeDiscount
         }
       })
       .then((newDiscountCode) => {
@@ -114,32 +129,30 @@ exports.createOrderInvoice = (req, res, next) => {
 
         // If new discount code is generated, then there is nothing to validate
         if (newDiscountCode) {
-          return newDiscountCode
+          discountCodeApplied = newDiscountCode
+          return
         }
 
         if (!existingDiscountCode) {
           return
         }
 
-        AdminController.validateDiscountCode(existingDiscountCode).then(
-          (codeDetails) => {
-            // Only accept this code if it is valid
-            if (codeDetails.validCode) {
-              discountPercent = codeDetails.discountPercent
-              discountAmount =
-                (discountPercent / 100) * orderValueInPaiseBeforeDiscount // Apply discount
-
-              orderValueInPaiseAfterDiscount =
-                orderValueInPaiseBeforeDiscount - discountAmount
-
-              // Next stage is expecting discount code, so return the code
-              return existingDiscountCode
-            }
-          },
-        )
+        return AdminController.validateDiscountCode(existingDiscountCode)
       })
-      .then((discountCode) => {
-        discountCodeApplied = discountCode
+      .then((codeDetails) => {
+        // Only accept this code if it is valid
+        if (codeDetails?.validCode) {
+          discountCodeApplied = existingDiscountCode
+          discountPercent = codeDetails.discountPercent
+          discountValue = `${discountPercent}%` // To be shown to user
+          discountAmount =
+            (discountPercent / 100) * orderValueInPaiseBeforeDiscount // Apply discount
+
+          orderValueInPaiseAfterDiscount =
+            orderValueInPaiseBeforeDiscount - discountAmount
+        }
+      })
+      .then(() => {
         /**
         At this point we have all the field values needed to create an order, whether discount needs to be applied or not, discountCode will have some value or will be undefined. Now, create new order.
         */
@@ -159,10 +172,10 @@ exports.createOrderInvoice = (req, res, next) => {
           userId: new ObjectId(userId),
           status: OrderStatus.CREATED,
           createdOn: new Date(),
-          itemsPurchased,
+          orderItems,
           orderValueInPaiseAfterDiscount,
           orderValueInPaiseBeforeDiscount,
-          discountAmount,
+          discountAmountInPaise: discountAmount,
           discountCode: discountCodeApplied
             ? new ObjectId(discountCodeApplied)
             : null,
@@ -201,7 +214,10 @@ exports.createOrderInvoice = (req, res, next) => {
             orderValueInPaiseAfterDiscount,
           ),
           discountAmount: paisetoRupee(discountAmount),
-          itemsPurchased,
+          updatedCart,
+          discountCode: discountCodeApplied?.toString(),
+          discountPercent,
+          discountValue,
           result: Results.SUCCESS,
         })
       })

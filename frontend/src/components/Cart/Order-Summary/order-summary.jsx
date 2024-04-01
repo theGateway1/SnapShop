@@ -58,7 +58,12 @@ const OrderSummary = () => {
     setIsLoading(true);
     createOrderInvoice(cart, discountCode)
       .then((result) => {
-        setCart(result.orderItems);
+        // Updated cart contains updated item price, available quantity and other information updated by server
+        if (result.updatedCart) {
+          setCart(result.updatedCart);
+        }
+
+        // If user's order is nth order, then user will get it at the time of generating invoice
         if (result.discountCode) {
           setDiscountCode(result.discountCode);
           setDiscountValueString(result.discountValue);
