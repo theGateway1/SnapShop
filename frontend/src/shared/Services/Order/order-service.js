@@ -13,3 +13,17 @@ export const getDiscountCode = () => {
       });
   });
 };
+
+export const createOrderInvoice = (itemsList, discountCode) => {
+  return new Promise((resolve, reject) => {
+    api
+      .post('/order/create-order-invoice', { itemsList, discountCode })
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+      });
+  });
+};

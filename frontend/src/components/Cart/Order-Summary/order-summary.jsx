@@ -1,5 +1,5 @@
 import { ToastContainer, toast } from 'react-toastify';
-import { getDiscountCode } from '../../../shared/Services/Order/order-service';
+import { createOrderInvoice, getDiscountCode } from '../../../shared/Services/Order/order-service';
 import { priceFormatter } from '../../../shared/Services/Product/product-service';
 import { useCart } from '../../../shared/contexts/cart-context';
 import './order-summary.css';
@@ -48,6 +48,21 @@ const OrderSummary = () => {
       .catch((error) => {
         console.error(error);
         toast.warn('Error occured. Please try again later');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const generateOrderInvoice = () => {
+    setIsLoading(true);
+    createOrderInvoice(cart, discountCode)
+      .then(() => {
+        toast.success('Invoice generated successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Error Occured!');
       })
       .finally(() => {
         setIsLoading(false);
@@ -103,7 +118,9 @@ const OrderSummary = () => {
           </button>
         </div>
         <div>
-          <button className="action-btn btn-lg summary-action-btn">Proceed to checkout</button>
+          <button onClick={generateOrderInvoice} className="action-btn btn-lg summary-action-btn">
+            Generate Invoice
+          </button>
         </div>
       </div>
       <ToastContainer
