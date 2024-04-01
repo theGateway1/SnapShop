@@ -86,13 +86,7 @@ const Header = () => {
         )}
       </header>
 
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        hideProgressBar={true}
-        limit={1}
-        theme="light"
-      />
+      <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="light" />
     </>
   );
 };

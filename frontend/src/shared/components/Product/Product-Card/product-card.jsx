@@ -38,9 +38,9 @@ const ProductCard = ({ product, page }) => {
   const addItemQtyToCart = () => {
     // Check if this item is available in stock, it is not real time, but gives a rough idea
     if (product.availableQty < itemQtyInCart + 1 || itemQtyInCart >= 1000) {
-      if (toastId) {
-        toast.dismiss(toastId);
-      }
+      // if (toastId) {
+      //   toast.dismiss(toastId);
+      // }
       toastId = toast("😓 Sorry, that's all we have for now.");
       return;
     }
@@ -78,13 +78,7 @@ const ProductCard = ({ product, page }) => {
               </button>
             </div>
           )}
-          <ToastContainer
-            position="top-center"
-            autoClose={1500}
-            hideProgressBar={true}
-            limit={1}
-            theme="dark"
-          />
+          <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
         </div>
       ) : (
         <div className="product-card-cart">
@@ -118,13 +112,7 @@ const ProductCard = ({ product, page }) => {
               </div>
             </div>
 
-            <ToastContainer
-              position="top-center"
-              autoClose={1500}
-              hideProgressBar={true}
-              limit={1}
-              theme="dark"
-            />
+            <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
           </div>
         </div>
       )}

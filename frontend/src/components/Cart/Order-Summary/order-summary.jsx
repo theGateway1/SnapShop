@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Spinner from '../../../shared/components/Loader/loader';
 
 const OrderSummary = () => {
-  const { cart } = useCart();
+  const { cart, setCart } = useCart();
   const [discountCode, setDiscountCode] = useState('');
   const [discountValueString, setDiscountValueString] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
@@ -57,8 +57,17 @@ const OrderSummary = () => {
   const generateOrderInvoice = () => {
     setIsLoading(true);
     createOrderInvoice(cart, discountCode)
-      .then(() => {
-        toast.success('Invoice generated successfully');
+      .then((result) => {
+        setCart(result.orderItems);
+        if (result.discountCode) {
+          setDiscountCode(result.discountCode);
+          setDiscountValueString(result.discountValue);
+          setDiscountPercent(result.discountPercent);
+          toast.success(`Yay! You got ${result.discountValue} discount`);
+          return;
+        } else {
+          toast.success('Invoice generated successfully');
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -123,13 +132,7 @@ const OrderSummary = () => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={true}
-        limit={1}
-        theme="dark"
-      />
+      <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
       <Spinner showSpinner={isLoading} />
     </div>
   );

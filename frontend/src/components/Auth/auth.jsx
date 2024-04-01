@@ -29,7 +29,7 @@ const Auth = (props) => {
     setPasswordError('');
 
     // Remove older toasts
-    toast.dismiss();
+    // toast.dismiss();
 
     // Check if the user has entered both fields correctly
     if (!email?.length) {
@@ -108,13 +108,7 @@ const Auth = (props) => {
         >
           Log in
         </button>
-        <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={true}
-          limit={1}
-          theme="dark"
-        />
+        <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
         <Spinner showSpinner={loginDisabled} />
       </div>
     </>
