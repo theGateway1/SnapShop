@@ -123,3 +123,7 @@ input[type='checkbox'] {
     margin-bottom: 0.2rem;
   }
 }
+
+.order-contents__price {
+  color: #007c00;
+}

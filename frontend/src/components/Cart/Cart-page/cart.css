@@ -32,6 +32,11 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .cart-summary-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   .cart-heading {
     font-size: 1.3rem;
   }

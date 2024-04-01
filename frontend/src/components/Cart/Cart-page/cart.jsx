@@ -24,17 +24,11 @@ const Cart = () => {
         <>
           <Banner addedClass="banner-container" />
           <div className="body-margin cart-summary-wrapper">
-            <div className="cart-order-summary mb-only">
-              <div className="cart-heading">Cart Summary</div>
-              <div className="cart-order-summary__container">
-                <OrderSummary />
-              </div>
-            </div>
             <div className="cart-items">
               <div className="cart-heading">Review Items</div>
               <ProductList page={APP_PAGES.CART} />
             </div>
-            <div className="cart-order-summary lg-only">
+            <div className="cart-order-summary">
               <div className="cart-heading">Cart Summary</div>
               <div className="cart-order-summary__container">
                 <OrderSummary />

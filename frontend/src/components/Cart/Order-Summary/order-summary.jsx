@@ -60,8 +60,8 @@ const OrderSummary = () => {
         <>
           <div className="order-summary__price updated-price">
             <div>
-              <span className="order-heading">Updated Total: </span>
-              <span className="total-price">
+              <span className="order-heading">Discounted Total: </span>
+              <span className="total-price order-contents__price">
                 {priceFormatter(getOrderTotalFloat() * ((100 - discountPercent) / 100))}
               </span>
             </div>
@@ -83,7 +83,9 @@ const OrderSummary = () => {
           <div className="order-contents__item">
             <div>{item.name.substr(0, 57).trim()}... </div>
             <div>x{item.quantity}</div>
-            <div style={{ color: '#007c00' }}>{priceFormatter(item.quantity * item.price)}</div>
+            <div className="order-contents__price">
+              {priceFormatter(item.quantity * item.price)}
+            </div>
           </div>
         ))}
       </div>
