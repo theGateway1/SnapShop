@@ -12,6 +12,7 @@ const DiscountCode = require('../common/models/discount-code')
  * A dummy API for POC of this application, because after order generation, invoice needs to be created - So this API stimulates that. Please refer to method createNewOrder() in controllers/order.js
  * @param {String} orderId - The orderId for which invoice needs to be generated
  * @param {Number} billAmount - The amount for which invoice needs to be generated
+ * @param {String} discountCode - (Optional) Discount code applied to this order (if any), and its details
  * @returns Creates payment invoice for an order
  */
 exports.generateInvoice = (
@@ -19,6 +20,7 @@ exports.generateInvoice = (
   billAmount,
   discountAmount,
   discountPercent,
+  discountCode,
 ) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

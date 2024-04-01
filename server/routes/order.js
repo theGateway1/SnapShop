@@ -3,11 +3,11 @@ const router = express.Router()
 const AuthController = require('../controllers/auth')
 const OrderController = require('../controllers/order')
 
-// Create new order
+// Create order invoice
 router.post(
-  '/create-order',
+  '/create-order-invoice',
   AuthController.validateUserAuthToken,
-  OrderController.createNewOrder,
+  OrderController.createOrderInvoice,
 )
 
 // Request discount code: Will only return success if current order is nth order
