@@ -214,3 +214,38 @@ exports.getTotalDiscountAmount = (req, res, next) => {
       .json({ error: Results.INTERNAL_SERVER_ERROR })
   }
 }
+
+/**
+ * An internal (unexposed) helper function to validate user entered discount code.
+ * @param {String} discountCode - The discount code entered by user
+ * @returns Whether discount code is valid or not, if it is valid, return discountPercent offered by it.
+ */
+exports.validateDiscountCode = (discountCode) => {
+  return new Promise((resolve, reject) => {
+    DiscountCode.findOne(
+      { _id: new ObjectId(discountCode) },
+      { status: 1, discountPercent: 1 },
+    )
+      .then((discountCode) => {
+        // If discount code does not exist, or is not active, discard it
+        if (!discountCode || discountCode.status != DiscountCodeStatus.ACTIVE) {
+          console.log('Invalid discount code')
+
+          // IMP: The use of resolve is made instead of reject here, because, the invoice creation should not be discarded just because user entered an invalid code, hence, just discard the code and proceed further.
+          return resolve({ validCode: false })
+        }
+
+        console.log('Valid discount code')
+        return resolve({
+          validCode: true,
+          discountPercent: discountCode.discountPercent,
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+
+        // As stated above, failing to validate discount code is not fatal, invalidate the code and proceed further
+        return resolve({ validCode: false })
+      })
+  })
+}
