@@ -1,5 +1,6 @@
 const HttpStatus = require('http-status-codes')
 const Item = require('../common/models/item')
+const { paisetoRupee } = require('./common-controller')
 
 /**
  * Middleware function to get products
@@ -17,7 +18,7 @@ exports.getProducts = (req, res, next) => {
       items = items?.map((item) => {
         return {
           name: item.itemName,
-          price: Number((item.priceInPaise / 100).toFixed(2)),
+          price: paisetoRupee(item.priceInPaise),
           availableQty: item.availableQty,
           _id: item._id.toString(),
           imgSrc: item.imgSrc,
