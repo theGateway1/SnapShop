@@ -22,6 +22,8 @@ Please checkout how cart gets validated in the backend, and the way server creat
 
 ![Discount](https://github.com/theGateway1/uniblox-ecommerce/assets/70198503/78ea09db-47de-42c9-9643-1452a13ffbcc)
 
+#### Note: Screenshots have been taken on my PC, but yes, it is responsive to all screen-sizes out there. 
+
 #### That's all for now, thanks for shopping ;)
 
 Feel free to reach out to me at [mohit.jain9844@gmail.com](mailto:mohit.jain9844@gmail.com).
