@@ -1,5 +1,5 @@
 # The 4 PM Store
-An e-commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. To make sure you can walk through my thought process, the project is open source since the first line of code, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
+An e-commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
 
 <b>The project is not yet deployed, as I'm still working on it.</b> Until then, I've attached some screenshots here.
 
