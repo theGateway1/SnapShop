@@ -1,6 +1,6 @@
 # The 4 PM Store
 An e-commerce app built on MERN stack to showcase my work that uses production grade best practices. <b>It is not yet deployed, as I'm still working on it.</b> 
-Until then I'll attach some screenshots here.
+Until then, I've attached some screenshots here.
 
 ### Login Page
 Please checkout Auth implementation, the use of auth context and protected routes.
