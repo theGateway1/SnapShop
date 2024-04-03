@@ -24,7 +24,7 @@ Please checkout how cart gets validated in the backend, and the way server creat
 
 #### That's all for now, thanks for shopping ;)
 
-### Wait, before you go 
+### Wait, before you go...
 I'll highly encourage you to go through the code, on the outset, <b>it might look like any other e-commerce application out there, but the code will change your mind</b>. Methods have been described extensively as comments using js-doc, and broken out in pieces to prevent redundancy and serve singular purpose. The screenshots have been taken on my PC, but, it is responsive to all screen sizes out there.
 
 Feel free to reach out to me at [mohit.jain9844@gmail.com](mailto:mohit.jain9844@gmail.com).
