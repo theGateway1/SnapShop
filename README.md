@@ -1,6 +1,7 @@
 # The 4 PM Store
-An e-commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. <b>It is not yet deployed, as I'm still working on it.</b> 
-Until then, I've attached some screenshots here.
+An e-commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. To make sure you can walk through my thought process, the project is open source since the first line of code, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
+
+<b>The project is not yet deployed, as I'm still working on it.</b> Until then, I've attached some screenshots here.
 
 ### Login Page
 Please checkout Auth implementation: the use of JWT in the backend, auth context and protected routes in frontend.
