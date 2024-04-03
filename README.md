@@ -3,7 +3,7 @@ An e-commerce app built on MERN stack to showcase my work that uses production g
 Until then, I've attached some screenshots here.
 
 ### Login Page
-Please checkout Auth implementation, the use of auth context and protected routes.
+Please checkout Auth implementation: the use of JWT in the backend, auth context and protected routes in frontend.
 
 ![Login](https://github.com/theGateway1/uniblox-ecommerce/assets/70198503/e334c055-7d59-4d0f-b4ee-b52be79f1a49)
 
