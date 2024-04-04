@@ -17,11 +17,17 @@ More products will be added soon... Stay tuned!
 ### Cart Page
 Please checkout how cart gets validated in the backend, and the way server creates invoice with <b>0 Client Trust</b> policy.
 
-![Cart](https://github.com/theGateway1/uniblox-ecommerce/assets/70198503/c061db97-b0c4-4652-821c-b8bbcfd8d706)
+![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/f70d06a4-8957-4ed3-b04e-02e0edf976e8)
+
 
 ### Discount Code (Try your luck!)
 
-![Discount](https://github.com/theGateway1/uniblox-ecommerce/assets/70198503/78ea09db-47de-42c9-9643-1452a13ffbcc)
+![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/2fb1a98d-5402-44cc-a8b8-d91fdc46cc03)
+
+### Complete your purchase
+
+![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/5f82abb3-a881-4acd-9e28-642ddfabf8c9)
+
 
 #### That's all for now, thanks for shopping ;)
 
