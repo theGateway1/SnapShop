@@ -39,7 +39,7 @@ const Cart = () => {
             )}
             <div className="cart-order-summary">
               <div className={`cart-heading ${invoiceGenerated ? 'payment-heading' : ''}`}>
-                {invoiceGenerated ? 'Make Payment' : 'Cart Summary'}
+                {invoiceGenerated ? '' : 'Cart Summary'}
               </div>
               <div className="cart-order-summary__container">
                 <OrderSummary

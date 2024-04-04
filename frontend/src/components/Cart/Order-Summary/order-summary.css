@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: left;
   padding: 1rem;
+  padding-top: 0.6rem;
   width: max-content;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
@@ -31,6 +32,35 @@
 .total-price {
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+.discount-string {
+  display: inline;
+  color: green;
+  font-size: 0.8rem;
+}
+
+.order-contents__price {
+  color: #007c00;
+}
+
+.order-contents__discount {
+  margin-top: 0.5rem;
+  color: #1d3d8e;
+}
+
+.payment-heading {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.updated-price {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-bottom: 0.2rem;
 }
 
 .gift-checkbox {
@@ -104,31 +134,9 @@ input[type='checkbox'] {
   }
 }
 
-.discount-string {
-  display: inline;
-  color: green;
-  font-size: 0.8rem;
-}
-
-.updated-price {
-  display: flex;
-  gap: 0.3rem;
-  align-items: center;
-  margin-bottom: 0.2rem;
-}
-
 @media only screen and (max-width: 400px) {
   .updated-price {
     display: block;
     margin-bottom: 0.2rem;
   }
-}
-
-.order-contents__price {
-  color: #007c00;
-}
-
-.order-contents__discount {
-  margin-top: 0.5rem;
-  color: #1d3d8e;
 }

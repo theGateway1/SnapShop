@@ -110,79 +110,85 @@ const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
   };
 
   return (
-    <div className="order-summary">
-      {discountCode ? (
-        <>
-          <div className="order-summary__price updated-price">
-            <div>
-              <span className="order-heading">Discounted Total: </span>
-              <span className="total-price order-contents__price">
-                {priceFormatter(getOrderTotalFloat() * ((100 - discountPercent) / 100))}
-              </span>
-            </div>
-            <div className="discount-string"> ({discountValueString} discount applied!)</div>
-          </div>
-        </>
-      ) : (
-        <div className="order-summary__price">
-          <span className="order-heading">Order Total: </span>
-          <span className="total-price">{getOrderTotalINR()}</span>
-        </div>
-      )}
-      <div className="gift-checkbox">
-        <input type="checkbox" />
-        <div>This order contains a gift</div>
-      </div>
-      <div className="order-contents">
-        {cart.map((item) => (
-          <div className="order-contents__item">
-            <div>{item.name.substr(0, 57).trim()}... </div>
-            <div>x{item.quantity}</div>
-            <div className="order-contents__price">
-              {priceFormatter(item.quantity * item.price)}
-            </div>
-          </div>
-        ))}
+    <>
+      <div className="order-summary">
+        <div className="payment-heading">Order Invoice</div>
         {discountCode ? (
-          <div className="order-contents__item order-contents__discount">
-            <div>[{`${discountValueString} Discount Applied`}]</div>
-            <div></div>
-            <div>-{priceFormatter(getOrderTotalFloat() * (discountPercent / 100))}</div>
+          <>
+            <div className="order-summary__price updated-price">
+              <div>
+                <span className="order-heading">Discounted Total: </span>
+                <span className="total-price order-contents__price">
+                  {priceFormatter(getOrderTotalFloat() * ((100 - discountPercent) / 100))}
+                </span>
+              </div>
+              <div className="discount-string"> ({discountValueString} discount applied!)</div>
+            </div>
+          </>
+        ) : (
+          <div className="order-summary__price">
+            <span className="order-heading">Order Total: </span>
+            <span className="total-price">{getOrderTotalINR()}</span>
+          </div>
+        )}
+        <div className="gift-checkbox">
+          <input type="checkbox" />
+          <div>This order contains a gift</div>
+        </div>
+        <div className="order-contents">
+          {cart.map((item) => (
+            <div className="order-contents__item">
+              <div>{item.name.substr(0, 57).trim()}... </div>
+              <div>x{item.quantity}</div>
+              <div className="order-contents__price">
+                {priceFormatter(item.quantity * item.price)}
+              </div>
+            </div>
+          ))}
+          {discountCode ? (
+            <div className="order-contents__item order-contents__discount">
+              <div>[{`${discountValueString} Discount Applied`}]</div>
+              <div></div>
+              <div>-{priceFormatter(getOrderTotalFloat() * (discountPercent / 100))}</div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+
+        {invoiceGenerated ? (
+          <div className="summary-button-container">
+            <button onClick={makeOrderPayment} className="action-btn btn-lg summary-action-btn">
+              Make Payment
+            </button>
           </div>
         ) : (
-          <></>
+          <div className="summary-button-container">
+            <div>
+              <button
+                disabled={discountCode}
+                onClick={requestDiscountCode}
+                className={`action-btn btn-lg summary-action-btn ${
+                  discountCode ? 'action-btn__disabled btn-lg summary-action-btn' : ''
+                }`}
+              >
+                Get discount code
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={generateOrderInvoice}
+                className="action-btn btn-lg summary-action-btn"
+              >
+                Generate Invoice
+              </button>
+            </div>
+          </div>
         )}
+        <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
+        <Spinner showSpinner={isLoading} />
       </div>
-
-      {invoiceGenerated ? (
-        <div className="summary-button-container">
-          <button onClick={makeOrderPayment} className="action-btn btn-lg summary-action-btn">
-            Make Payment
-          </button>
-        </div>
-      ) : (
-        <div className="summary-button-container">
-          <div>
-            <button
-              disabled={discountCode}
-              onClick={requestDiscountCode}
-              className={`action-btn btn-lg summary-action-btn ${
-                discountCode ? 'action-btn__disabled btn-lg summary-action-btn' : ''
-              }`}
-            >
-              Get discount code
-            </button>
-          </div>
-          <div>
-            <button onClick={generateOrderInvoice} className="action-btn btn-lg summary-action-btn">
-              Generate Invoice
-            </button>
-          </div>
-        </div>
-      )}
-      <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
-      <Spinner showSpinner={isLoading} />
-    </div>
+    </>
   );
 };
 
