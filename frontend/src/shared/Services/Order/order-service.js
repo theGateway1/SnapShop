@@ -27,3 +27,17 @@ export const createOrderInvoice = (itemsList, discountCode) => {
       });
   });
 };
+
+export const makePayment = (orderId, invoiceId) => {
+  return new Promise((resolve, reject) => {
+    api
+      .post('/order/make-payment', { orderId, invoiceId })
+      .then((result) => {
+        resolve(result.paymentSuccess);
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+      });
+  });
+};

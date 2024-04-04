@@ -1,17 +1,23 @@
 import { ToastContainer, toast } from 'react-toastify';
-import { createOrderInvoice, getDiscountCode } from '../../../shared/Services/Order/order-service';
+import {
+  createOrderInvoice,
+  getDiscountCode,
+  makePayment,
+} from '../../../shared/Services/Order/order-service';
 import { priceFormatter } from '../../../shared/Services/Product/product-service';
 import { useCart } from '../../../shared/contexts/cart-context';
 import './order-summary.css';
 import { useState } from 'react';
 import Spinner from '../../../shared/components/Loader/loader';
 
-const OrderSummary = () => {
+const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
   const { cart, setCart } = useCart();
   const [discountCode, setDiscountCode] = useState('');
   const [discountValueString, setDiscountValueString] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  let orderId = '';
+  let invoiceId = '';
 
   const getOrderTotalINR = () => {
     const orderTotal = cart.reduce((total, item) => {
@@ -58,6 +64,10 @@ const OrderSummary = () => {
     setIsLoading(true);
     createOrderInvoice(cart, discountCode)
       .then((result) => {
+        orderId = result.orderId;
+        invoiceId = result.invoiceId;
+        setInvoiceGenerated(true);
+
         // Updated cart contains updated item price, available quantity and other information updated by server
         if (result.updatedCart) {
           setCart(result.updatedCart);
@@ -73,6 +83,22 @@ const OrderSummary = () => {
         } else {
           toast.success('Invoice generated successfully');
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Error Occured!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const makeOrderPayment = () => {
+    setIsLoading(true);
+
+    makePayment(orderId, invoiceId)
+      .then((paymentSuccess) => {
+        toast.success('Order Confirmed!');
       })
       .catch((error) => {
         console.error(error);
@@ -117,26 +143,43 @@ const OrderSummary = () => {
             </div>
           </div>
         ))}
+        {discountCode ? (
+          <div className="order-contents__item order-contents__discount">
+            <div>[{`${discountValueString} Discount Applied`}]</div>
+            <div></div>
+            <div>-{priceFormatter(getOrderTotalFloat() * (discountPercent / 100))}</div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
-      <div className="summary-button-container">
-        <div>
-          <button
-            disabled={discountCode}
-            onClick={requestDiscountCode}
-            className={`action-btn btn-lg summary-action-btn ${
-              discountCode ? 'action-btn__disabled btn-lg summary-action-btn' : ''
-            }`}
-          >
-            Get discount code
+      {invoiceGenerated ? (
+        <div className="summary-button-container">
+          <button onClick={makeOrderPayment} className="action-btn btn-lg summary-action-btn">
+            Make Payment
           </button>
         </div>
-        <div>
-          <button onClick={generateOrderInvoice} className="action-btn btn-lg summary-action-btn">
-            Generate Invoice
-          </button>
+      ) : (
+        <div className="summary-button-container">
+          <div>
+            <button
+              disabled={discountCode}
+              onClick={requestDiscountCode}
+              className={`action-btn btn-lg summary-action-btn ${
+                discountCode ? 'action-btn__disabled btn-lg summary-action-btn' : ''
+              }`}
+            >
+              Get discount code
+            </button>
+          </div>
+          <div>
+            <button onClick={generateOrderInvoice} className="action-btn btn-lg summary-action-btn">
+              Generate Invoice
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <ToastContainer position="top-center" hideProgressBar={true} limit={1} theme="dark" />
       <Spinner showSpinner={isLoading} />
     </div>

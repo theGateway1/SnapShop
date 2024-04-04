@@ -127,3 +127,8 @@ input[type='checkbox'] {
 .order-contents__price {
   color: #007c00;
 }
+
+.order-contents__discount {
+  margin-top: 0.5rem;
+  color: #1d3d8e;
+}

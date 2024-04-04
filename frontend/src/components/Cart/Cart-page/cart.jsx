@@ -14,6 +14,7 @@ const Cart = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorOccured, setErrorOccured] = useState(false);
+  const [invoiceGenerated, setInvoiceGenerated] = useState(false);
 
   return (
     <>
@@ -23,15 +24,28 @@ const Cart = () => {
       ) : (
         <>
           <Banner addedClass="banner-container" />
-          <div className="body-margin cart-summary-wrapper">
-            <div className="cart-items">
-              <div className="cart-heading">Review Items</div>
-              <ProductList page={APP_PAGES.CART} />
-            </div>
+          <div
+            className={`body-margin cart-summary-wrapper ${
+              invoiceGenerated ? 'cart-summary-wrapper__payment' : ''
+            }`}
+          >
+            {invoiceGenerated ? (
+              <></>
+            ) : (
+              <div className="cart-items">
+                <div className="cart-heading">Review Items</div>
+                <ProductList page={APP_PAGES.CART} />
+              </div>
+            )}
             <div className="cart-order-summary">
-              <div className="cart-heading">Cart Summary</div>
+              <div className={`cart-heading ${invoiceGenerated ? 'payment-heading' : ''}`}>
+                {invoiceGenerated ? 'Make Payment' : 'Cart Summary'}
+              </div>
               <div className="cart-order-summary__container">
-                <OrderSummary />
+                <OrderSummary
+                  invoiceGenerated={invoiceGenerated}
+                  setInvoiceGenerated={setInvoiceGenerated}
+                />
               </div>
             </div>
           </div>
