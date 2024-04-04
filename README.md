@@ -1,5 +1,5 @@
 # The 4 PM Store
-An e-commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment (very soon!). 
+An E-Commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment (very soon!). 
 
 <b>The project will be deployed very soon, I'm still working on some features.</b> Until then, I've attached some screenshots here.
 
@@ -26,6 +26,6 @@ Please checkout how cart gets validated in the backend, and the way server creat
 #### That's all for now, thanks for shopping ;)
 
 ### Wait, before you go...
-I'll highly encourage you to go through the code, on the outset, <b>it might look like any other e-commerce application out there, but the code will change your mind</b>. Methods have been described extensively as comments using js-doc, and broken out in pieces to prevent redundancy and serve singular purpose. The screenshots have been taken on my PC, but, it is responsive to all screen sizes out there.
+I'll highly encourage you to go through the code, on the outset, <b>it might look like any other E-Commerce application out there, but the code will change your mind</b>. Methods & components have been described extensively as comments using [js-doc](https://www.npmjs.com/package/jsdoc), and broken out in pieces to prevent redundancy and serve singular purpose. The screenshots have been taken on my PC, but, it is responsive to all screen sizes out there.
 
 Feel free to reach out to me at [mohit.jain9844@gmail.com](mailto:mohit.jain9844@gmail.com).
