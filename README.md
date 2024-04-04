@@ -20,7 +20,8 @@ Please checkout how cart gets validated in the backend, and the way server creat
 ![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/f70d06a4-8957-4ed3-b04e-02e0edf976e8)
 
 
-### Discount Code (Try your luck!)
+### Get a Discount Code (Try your luck!)
+Only those who can talk to code get it: It's a trade secret 🤫
 
 ![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/2fb1a98d-5402-44cc-a8b8-d91fdc46cc03)
 
