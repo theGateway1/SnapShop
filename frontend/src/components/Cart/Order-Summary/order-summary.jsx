@@ -9,15 +9,17 @@ import { useCart } from '../../../shared/contexts/cart-context';
 import './order-summary.css';
 import { useState } from 'react';
 import Spinner from '../../../shared/components/Loader/loader';
+import { useNavigate } from 'react-router-dom';
 
 const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
-  const { cart, setCart } = useCart();
+  const { cart, setCart, setProducts } = useCart();
   const [discountCode, setDiscountCode] = useState('');
   const [discountValueString, setDiscountValueString] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  let orderId = '';
-  let invoiceId = '';
+  const [orderId, setOrderId] = useState('');
+  const [invoiceId, setInvoiceId] = useState('');
+  const navigate = useNavigate();
 
   const getOrderTotalINR = () => {
     const orderTotal = cart.reduce((total, item) => {
@@ -64,8 +66,8 @@ const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
     setIsLoading(true);
     createOrderInvoice(cart, discountCode)
       .then((result) => {
-        orderId = result.orderId;
-        invoiceId = result.invoiceId;
+        setOrderId(result.orderId);
+        setInvoiceId(result.invoiceId);
         setInvoiceGenerated(true);
 
         // Updated cart contains updated item price, available quantity and other information updated by server
@@ -95,10 +97,14 @@ const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
 
   const makeOrderPayment = () => {
     setIsLoading(true);
-
     makePayment(orderId, invoiceId)
       .then((paymentSuccess) => {
+        setCart([]);
+        setProducts([]);
         toast.success('Order Confirmed!');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       })
       .catch((error) => {
         console.error(error);

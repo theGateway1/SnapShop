@@ -7,6 +7,7 @@ const {
   DiscountCodeStatus,
 } = require('../common/typedefs')
 const DiscountCode = require('../common/models/discount-code')
+const Item = require('../common/models/item')
 
 /**
  * A dummy API for POC of this application, because after order generation, invoice needs to be created - So this API stimulates that. Please refer to method createNewOrder() in controllers/order.js
@@ -39,7 +40,7 @@ exports.generateInvoice = (
  * @param {String} req.body.discountCode - discountCode applied to order (if any)
  * @returns {void} - Performs post payment actions
  */
-exports.postPaymentActions = (req, res, next) => {
+exports.makePayment = (req, res, next) => {
   try {
     const orderId = req.body.orderId
     const invoiceId = req.body.invoiceId
@@ -51,12 +52,12 @@ exports.postPaymentActions = (req, res, next) => {
 
     // Update order status to paid and fetch itemsList
     Order.findOneAndUpdate(
-      { _id: ObjectId(orderId) },
+      { _id: new ObjectId(orderId) },
       { $set: { status: OrderStatus.PAID } },
       { returnOriginal: false }, // To get the updated document
     )
       .then((result) => {
-        const itemsList = result.value.itemsPurchased
+        const itemsList = result.orderItems
 
         /**
          * Operations to be performed for each item purchased in itemsList
@@ -65,12 +66,12 @@ exports.postPaymentActions = (req, res, next) => {
          */
 
         const promises = itemsList.map((item) => {
-          const itemId = item.itemId
+          const itemId = item._id
           const qtyPurchased = item.quantity
 
           // Update the corresponding item in the items collection
-          return itemsCollection.findOneAndUpdate(
-            { _id: ObjectId(itemId) },
+          return Item.findOneAndUpdate(
+            { _id: new ObjectId(itemId) },
             {
               $inc: {
                 purchasedCount: qtyPurchased, // Increase item purchasedCount
@@ -97,12 +98,12 @@ exports.postPaymentActions = (req, res, next) => {
         }
 
         return DiscountCode.findOneAndUpdate(
-          { _id: ObjectId(discountCode) },
+          { _id: new ObjectId(discountCode) },
           {
             status: DiscountCodeStatus.USED,
             discountAmount: req.body.discountAmount,
             discountPercent: req.body.discountPercent,
-            orderId: ObjectId(orderId),
+            orderId: new ObjectId(orderId),
           },
         )
       })

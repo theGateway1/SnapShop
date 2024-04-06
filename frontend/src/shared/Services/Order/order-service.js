@@ -31,7 +31,7 @@ export const createOrderInvoice = (itemsList, discountCode) => {
 export const makePayment = (orderId, invoiceId) => {
   return new Promise((resolve, reject) => {
     api
-      .post('/order/make-payment', { orderId, invoiceId })
+      .post('/payment/make-payment', { orderId, invoiceId })
       .then((result) => {
         resolve(result.paymentSuccess);
       })

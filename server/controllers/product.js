@@ -11,7 +11,11 @@ exports.getProducts = (req, res, next) => {
   const page = req.params?.page ?? 1
   const resultsPerPage = 10
   const skipCount = resultsPerPage * page - resultsPerPage
-  Item.find()
+  Item.find({
+    availableQty: {
+      $gte: 1,
+    },
+  })
     .skip(skipCount)
     .limit(resultsPerPage)
     .then((items) => {
