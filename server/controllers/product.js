@@ -9,7 +9,7 @@ const { paisetoRupee } = require('./common-controller')
  */
 exports.getProducts = (req, res, next) => {
   const page = req.params?.page ?? 1
-  const resultsPerPage = 10
+  const resultsPerPage = 12
   const skipCount = resultsPerPage * page - resultsPerPage
   Item.find({
     availableQty: {
