@@ -8,7 +8,7 @@ import { useAuth } from '../../shared/contexts/auth-context';
 import Spinner from '../../shared/components/Loader/loader';
 
 const Auth = (props) => {
-  const [email, setEmail] = useState('admin@uniblox.com');
+  const [email, setEmail] = useState('guest@4pm-store.com');
   const [password, setPassword] = useState('uniblox');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');

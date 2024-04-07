@@ -21,7 +21,11 @@ app.use((req, res, next) => {
 
 // App routes
 app.get('/', (req, res, next) =>
-  res.status(200).send('Hi, from The 4 PM Store'),
+  res
+    .status(200)
+    .send(
+      'Hi, from The 4 PM Store, this is our warehouse. Please visit our store: https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com',
+    ),
 )
 
 app.use('/admin', AdminRouter)

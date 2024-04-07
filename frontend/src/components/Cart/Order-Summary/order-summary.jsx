@@ -118,7 +118,7 @@ const OrderSummary = ({ invoiceGenerated, setInvoiceGenerated }) => {
   return (
     <>
       <div className="order-summary">
-        <div className="payment-heading">Order Invoice</div>
+        {invoiceGenerated ? <div className="payment-heading">Order Invoice</div> : <></>}
         {discountCode ? (
           <>
             <div className="order-summary__price updated-price">
