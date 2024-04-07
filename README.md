@@ -1,7 +1,5 @@
 # The 4 PM Store
-An E-Commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment (very soon!). 
-
-<b>The project will be deployed very soon, I'm still working on some features.</b> Until then, I've attached some screenshots here.
+An E-Commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
 
 ### Login Page
 Please checkout Auth implementation: the use of JWT in the backend, auth context and protected routes in frontend.
