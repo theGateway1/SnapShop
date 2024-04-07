@@ -4,7 +4,7 @@ An E-Commerce full-stack web application built on MERN stack to showcase my work
 ### Deployment Details
 Frontend Deployment: [AWS Amplify](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com)<br />
 Backend Deployment: [AWS Elastic Beanstalk](https://the-4pm-store-server.ap-south-1.elasticbeanstalk.com)<br />
-SSL Certificate Provider: (To have HTTPS endpoint for server): [Get Your SSL](https://manage.sslforfree.com)<br />
+SSL Certificate Provider (To have HTTPS endpoint for server): [Get Your SSL](https://manage.sslforfree.com)<br />
 <b>Visit Project:</b> [Click Here](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com/)
 
 ### Login Page
