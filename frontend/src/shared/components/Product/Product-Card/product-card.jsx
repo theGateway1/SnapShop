@@ -38,9 +38,7 @@ const ProductCard = ({ product, page }) => {
   const addItemQtyToCart = () => {
     // Check if this item is available in stock, it is not real time, but gives a rough idea
     if (product.availableQty < itemQtyInCart + 1) {
-      // if (toastId) {
-      //   toast.dismiss(toastId);
-      // }
+      // toast.dismiss();
       toast("😓 Sorry, that's all we have for now.");
       return;
     } else if (itemQtyInCart >= 100) {

@@ -17,6 +17,9 @@ app.use((req, res, next) => {
 })
 
 // App routes
+app.get('/', (req, res, next) =>
+  res.status(200).send('Hi, from The 4 PM Store'),
+)
 app.use('/admin', AdminRouter)
 app.use('/auth', AuthRouter)
 app.use('/order', OrderRouter)
