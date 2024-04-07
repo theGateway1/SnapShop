@@ -6,7 +6,7 @@ import { API_ERRORS } from '../constants/api-errors';
 
 const defaults = {
   // baseURL: process.env.API_URL || 'http://localhost:3001',
-  baseURL: 'http://the-4pm-store-server.ap-south-1.elasticbeanstalk.com',
+  baseURL: 'https://the-4pm-store-server.ap-south-1.elasticbeanstalk.com',
   headers: () => ({
     'Content-Type': 'application/json',
     authToken: getUserAuthToken(),

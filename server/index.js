@@ -10,7 +10,10 @@ app.use(express.json())
 
 // Add CORS middleware
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com',
+  )
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authToken')
   next()
@@ -20,6 +23,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res, next) =>
   res.status(200).send('Hi, from The 4 PM Store'),
 )
+
 app.use('/admin', AdminRouter)
 app.use('/auth', AuthRouter)
 app.use('/order', OrderRouter)
