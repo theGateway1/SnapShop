@@ -1,11 +1,20 @@
 # [The 4 PM Store](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com/)
-An E-Commerce full-stack web application built on MERN stack to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
+An E-Commerce full-stack web application to showcase my work that uses production grade best practices. It uses latest version of React & Node JS (as of April 2024). To make sure you can walk through my thought process, <b>the project is open source since the first line of code</b>, and progresses further through schema updates, optimizations and bug fixes, it's a journey from ideation to deployment. 
 
 ### Deployment Details
+<b>Visit Project:</b> [Click Here](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com/)<br />
 Frontend Deployment: [AWS Amplify](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com)<br />
 Backend Deployment: [AWS Elastic Beanstalk](https://the-4pm-store-server.ap-south-1.elasticbeanstalk.com)<br />
 SSL Certificate Provider (To have HTTPS endpoint for server): [Get Your SSL](https://manage.sslforfree.com)<br />
-<b>Visit Project:</b> [Click Here](https://4pmstore.d3ecocrh7z4pdj.amplifyapp.com/)
+
+
+### Tech Stack
+**Frontend**: React JS<br />
+**Backend**: Node JS, Express JS<br />
+**Database**: NoSQL (Mongo DB)<br />
+**Deployment**: Cloud deployment on AWS<br />
+
+<ins>Some screenshots of the application:-</ins>
 
 ### Login Page
 Please checkout Auth implementation: the use of JWT in the backend, auth context and protected routes in frontend.
