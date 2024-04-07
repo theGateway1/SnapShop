@@ -24,7 +24,7 @@ Please checkout Auth implementation: the use of JWT in the backend, auth context
 ### Home Page
 More products will be added soon... Stay tuned!
 
-![Home](https://github.com/theGateway1/The-4PM-Store/assets/70198503/6c884f1e-70e8-40a0-b2ca-e94fc5ebf59a)
+![Home](https://github.com/theGateway1/The-4PM-Store/assets/70198503/3204134e-92bb-4635-ae21-158fe58c0f93)
 
 
 ### Cart Page
