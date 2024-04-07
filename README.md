@@ -24,23 +24,24 @@ Please checkout Auth implementation: the use of JWT in the backend, auth context
 ### Home Page
 More products will be added soon... Stay tuned!
 
-![Home](https://github.com/theGateway1/The-4PM-Store/assets/70198503/6c884f1e-70e8-40a0-b2ca-e94fc5ebf59a)
+![Home](https://github.com/theGateway1/The-4PM-Store/assets/70198503/3204134e-92bb-4635-ae21-158fe58c0f93)
 
 
 ### Cart Page
 Please checkout how cart gets validated in the backend, and the way server creates invoice with <b>0 Client Trust</b> policy.
 
-![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/f70d06a4-8957-4ed3-b04e-02e0edf976e8)
+![Cart](https://github.com/theGateway1/The-4PM-Store/assets/70198503/f70d06a4-8957-4ed3-b04e-02e0edf976e8)
 
 
 ### Get a Discount Code (Try your luck!)
 Only those who can talk to code get it: It's a trade secret 🤫
 
-![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/2fb1a98d-5402-44cc-a8b8-d91fdc46cc03)
+![Discount Code](https://github.com/theGateway1/The-4PM-Store/assets/70198503/2fb1a98d-5402-44cc-a8b8-d91fdc46cc03)
 
 ### Complete your purchase
 
-![image](https://github.com/theGateway1/The-4PM-Store/assets/70198503/5f82abb3-a881-4acd-9e28-642ddfabf8c9)
+![Order Invoice](https://github.com/theGateway1/The-4PM-Store/assets/70198503/c7a25325-e734-4378-8cb2-2305f3bb9694)
+
 
 #### That's all for now, thanks for shopping ;)
 
