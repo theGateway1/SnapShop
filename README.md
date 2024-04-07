@@ -24,7 +24,7 @@ Please checkout Auth implementation: the use of JWT in the backend, auth context
 ### Home Page
 More products will be added soon... Stay tuned!
 
-![Home](https://github.com/theGateway1/uniblox-ecommerce/assets/70198503/2ac4a69d-be2e-4f86-84d2-bf2c1ab73de6)
+![Home](https://github.com/theGateway1/The-4PM-Store/assets/70198503/6c884f1e-70e8-40a0-b2ca-e94fc5ebf59a)
 
 
 ### Cart Page
