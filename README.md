@@ -10,9 +10,9 @@ SSL Certificate Provider (To have HTTPS endpoint for server): [Get Your SSL](htt
 
 ### Tech Stack
 **Frontend**: React JS<br />
-**Backend**: Node JS, Express JS<br />
-**Database**: NoSQL (Mongo DB)<br />
-**Deployment**: Cloud deployment on AWS<br />
+**Backend**: Node JS, Express JS - Running on an Amazon Linux instance<br />
+**Database**: NoSQL (Mongo DB) - Running on Mongo DB managed cloud (shared instance)<br />
+**Deployment**: Frontend & backend both deployed on AWS cloud<br />
 
 <ins>Some screenshots of the application:-</ins>
 
