@@ -74,32 +74,36 @@
     display: none;
   }
 
-  .mb-only {
-    display: block;
-  }
-
-  .header {
-    padding: 0 1.2rem;
-  }
-
   .item-count-mb {
     position: absolute;
-    transform: translate(1.5rem, -0.5rem);
+    transform: translate(2.9rem, 0.5rem);
     background-color: rgb(252, 166, 6);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: white;
     text-align: center;
     border-radius: 50%;
-    height: 1.1rem;
-    width: 1.1rem;
+    height: 0.9rem;
+    width: 0.9rem;
     vertical-align: middle;
   }
 
-  .header-content-bottom {
+  .footer {
+    user-select: none;
+    width: 100%;
+    background-color: #123da0d5;
+    color: #fff;
+    font-size: 1rem;
+    z-index: 10;
+    justify-content: space-around;
     display: flex;
-    margin: 1rem;
-    flex-direction: column;
-    gap: 0.8rem;
-    position: relative;
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .footer p {
+    cursor: pointer;
+    margin: 0.8rem;
   }
 }
