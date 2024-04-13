@@ -46,6 +46,6 @@ Only those who can talk to code get it: It's a trade secret 🤫
 #### That's all for now, thanks for shopping ;)
 
 ### Wait, before you go...
-I'll highly encourage you to go through the code, on the outset, <b>it might look like any other E-Commerce application out there, but the code will change your mind</b>.
+I'll highly encourage you to go through the code, on the outset, <b>it might look like any other E-Commerce application out there, but the code will certainly change your mind</b>.
 
-Feel free to reach out to me at [mohit.jain9844@gmail.com](mailto:mohit.jain9844@gmail.com).
+<!-- Feel free to reach out to me at [mohit.jain9844@gmail.com](mailto:mohit.jain9844@gmail.com). -->
