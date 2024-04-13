@@ -10,43 +10,19 @@ const DiscountCode = require('../common/models/discount-code')
 const Item = require('../common/models/item')
 
 /**
- * A dummy API for POC of this application, because after order generation, invoice needs to be created - So this API stimulates that. Please refer to method createNewOrder() in controllers/order.js
- * @param {String} orderId - The orderId for which invoice needs to be generated
- * @param {Number} billAmount - The amount for which invoice needs to be generated
- * @param {String} discountCode - (Optional) Discount code applied to this order (if any), and its details
- * @returns Creates payment invoice for an order
- */
-exports.generateInvoice = (
-  orderId,
-  billAmount,
-  discountAmount,
-  discountPercent,
-  discountCode,
-) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const invoiceId = new ObjectId()
-      console.log('Invoice generated with ID:', invoiceId)
-      resolve(invoiceId)
-    }, 1000)
-  })
-}
-
-/**
- * A dummy API for POC of this application, it will be called by a 3rd party (like Razorpay) after payment is made for an invoice, to perform the post payment actions.
- * For the purpose of this application, it will be called by the server after clicking make payment button
- * @param {String} req.body.invoiceId - The invoiceId for which payment has been made
+ * This API will be called by a Razorpay after payment is made for an invoice, to perform the post payment actions.
  * @param {String} req.body.orderId - The orderId for which payment has been made
- * @param {String} req.body.discountCode - discountCode applied to order (if any)
+ * @param {String} req.body.discountCode - Discount code applied to order (if any)
  * @returns {void} - Performs post payment actions
  */
 exports.makePayment = (req, res, next) => {
   try {
     const orderId = req.body.orderId
-    const invoiceId = req.body.invoiceId
     const discountCode = req.body.discountCode
+    const discountAmount = req.body.discountAmount
+    const discountPercent = req.body.discountPercent
 
-    if (!invoiceId || !orderId) {
+    if (!orderId) {
       throw new Error('Missing invoice id or order id')
     }
 
@@ -101,8 +77,8 @@ exports.makePayment = (req, res, next) => {
           { _id: new ObjectId(discountCode) },
           {
             status: DiscountCodeStatus.USED,
-            discountAmount: req.body.discountAmount,
-            discountPercent: req.body.discountPercent,
+            discountAmount,
+            discountPercent,
             orderId: new ObjectId(orderId),
           },
         )
