@@ -17,6 +17,7 @@ const orderSchema = mongoose.Schema({
   createdOn: { type: Date, required: true },
   orderItems: { type: [itemsPurchasedSchema], required: true }, // Array of items and their respective quantity
   discountCode: { type: mongoose.Schema.Types.ObjectId, ref: 'DiscountCode' },
+  razorpayOrderId: { type: String, required: true }, // Razorpay order Id
 })
 
 module.exports = mongoose.model('Order', orderSchema)

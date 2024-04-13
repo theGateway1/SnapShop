@@ -7,7 +7,7 @@ const OrderController = require('../controllers/order')
 router.post(
   '/create-order-invoice',
   AuthController.validateUserAuthToken,
-  OrderController.createOrderInvoice,
+  OrderController.createOrder,
 )
 
 // Request discount code: Will only return success if current order is nth order

@@ -7,16 +7,21 @@ const Order = require('../common/models/order')
 const AdminController = require('./admin-controls')
 const PaymentsController = require('./payments')
 const { formatPaisePrice, paisetoRupee } = require('./common-controller')
+const Razorpay = require('razorpay')
+const razorpay = new Razorpay({
+  key_id: process.env.RZPAY_KEY_ID,
+  key_secret: process.env.RZPAY_KEY_SECRET,
+})
 
 // Controller for Order related methods
 
 /**
- * Middleware function to save a new order and generate its invoice
+ * Middleware function to generate a new order
  * @param {Array} req.body.itemsList - The list of items in format: [{itemId, itemQuantity}]
  * @param {String} req.body.discountCode - (Optional) If user has received a discount code. This code will be validated here.
  * @returns Creates order and generates payment invoice for newly created order
  */
-exports.createOrderInvoice = (req, res, next) => {
+exports.createOrder = (req, res, next) => {
   try {
     const userId = req.userId
     const itemsList = req.body.itemsList
@@ -152,7 +157,7 @@ exports.createOrderInvoice = (req, res, next) => {
             orderValueInPaiseBeforeDiscount - discountAmount
         }
       })
-      .then(() => {
+      .then(async () => {
         /**
         At this point we have all the field values needed to create an order, whether discount needs to be applied or not, discountCode will have some value or will be undefined. Now, create new order.
         */
@@ -167,8 +172,23 @@ exports.createOrderInvoice = (req, res, next) => {
         )
         discountAmount = formatPaisePrice(discountAmount)
 
+        const razorpayOrder = await razorpay.orders.create({
+          amount: orderValueInPaiseAfterDiscount,
+          currency: 'INR',
+          receipt: 'receipt#1',
+          notes: {
+            orderId: orderId.toString(),
+            discountCode: discountCodeApplied?.toString(),
+            discountAmount,
+            discountPercent,
+          },
+        })
+
+        console.log('RZP Order:', razorpayOrder)
+
         const order = new Order({
           _id: orderId, // Use the orderId that was already created
+          razorpayOrderId: razorpayOrder.id,
           userId: new ObjectId(userId),
           status: OrderStatus.CREATED,
           createdOn: new Date(),
@@ -183,30 +203,13 @@ exports.createOrderInvoice = (req, res, next) => {
 
         return order.save()
       })
-      .then(() => {
-        /**
-         Since this is an e-commerce application, let's call generateInvoice API, for which client will make payment
-        */
 
-        return PaymentsController.generateInvoice(
-          orderId,
-          orderValueInPaiseAfterDiscount,
-          discountAmount,
-          discountPercent,
-          discountCodeApplied,
-        )
-      })
-      .then((invoiceId) => {
+      .then(() => {
         /** 
          Now send the invoice back to client for them to make payment and place the order
         */
-        console.log(
-          'Created order successfully, sending invoice to user',
-          invoiceId,
-        )
         return res.status(HttpStatus.StatusCodes.OK).json({
           orderId,
-          invoiceId,
           orderValueInPaiseAfterDiscount: paisetoRupee(
             orderValueInPaiseAfterDiscount,
           ),
