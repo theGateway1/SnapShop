@@ -4,7 +4,7 @@ An E-Commerce full-stack web application that utilizes machine learning to help 
 ### Deployment Details
 <b>Visit Project:</b> [Click Here](https://snap-shop.d3ecocrh7z4pdj.amplifyapp.com/)<br />
 Frontend Deployment: [AWS Amplify](https://snap-shop.d3ecocrh7z4pdj.amplifyapp.com)<br />
-Backend Deployment: [AWS Elastic Beanstalk](https://the-4pm-store-server.ap-south-1.elasticbeanstalk.com)<br />
+Backend Deployment: [AWS Elastic Beanstalk](https://snap-shop-server.ap-south-1.elasticbeanstalk.com)<br />
 SSL Certificate Provider (To have HTTPS endpoint for server): [Get Your SSL](https://manage.sslforfree.com)<br />
 
 ### Tech Stack
